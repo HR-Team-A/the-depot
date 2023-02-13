@@ -2,6 +2,7 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
+/the-depot/.vs
+/the-depot/bin/Debug/net6.0
+/the-depot/obj
 /.vs
-/bin/Debug/net6.0
-/obj
