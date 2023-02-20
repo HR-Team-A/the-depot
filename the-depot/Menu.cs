@@ -19,12 +19,12 @@ namespace the_depot
 
             options_reserveren = new List<Option>
             {
-                new Option("11:00", () => WriteTemporaryMessage("tijd 1")),
-                new Option("12:00", () => WriteTemporaryMessage("tijd 2")),
-                new Option("13:00", () => WriteTemporaryMessage("tijd 3")),
-                new Option("14:00", () => WriteTemporaryMessage("tijd 4")),
-                new Option("15:00", () => WriteTemporaryMessage("tijd 5")),
-                new Option("16:00", () => WriteTemporaryMessage("tijd 6")),
+                new Option("11:00 -- 12:00", () => WriteTemporaryMessage("tijd 1")),
+                new Option("12:00 -- 13:00", () => WriteTemporaryMessage("tijd 2")),
+                new Option("13:00 -- 14:00", () => WriteTemporaryMessage("tijd 3")),
+                new Option("14:00 -- 15:00", () => WriteTemporaryMessage("tijd 4")),
+                new Option("15:00 -- 16:00", () => WriteTemporaryMessage("tijd 5")),
+                new Option("16:00 -- 17:00", () => WriteTemporaryMessage("tijd 6")),
                 new Option("17:00", () => WriteTemporaryMessage("tijd 7")),
             };
 
@@ -36,7 +36,7 @@ namespace the_depot
             Console.Clear();
             Console.WriteLine(message);
             Thread.Sleep(3000);
-            WriteMenu(options, options.First());
+            WriteMenu(options_reserveren, options_reserveren.First());
         }
 
         static void ChooseMenu(List<Option> options)
