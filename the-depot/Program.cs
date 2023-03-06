@@ -1,3 +1,2 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
-System.Console.WriteLine("Eat a apple");
+﻿Console.WriteLine("Hello, World!");
+Console.WriteLine("Eat a apple");
