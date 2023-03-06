@@ -1,33 +1,45 @@
 ﻿using ConsoleApp;
 using System;
+using System.Media;
+using System.Windows;
 
 namespace the_depot
 {
     public class Menu
     {
         public static List<Option> options;
-        public static List<Option> options_reserveren;
+        public static List<Option> optionsReserveren;
+        public static List<Option> optionsMinutes;
+        public static string reservationTime;
         static void Main(string[] args)
         {
             // Create options that you want your menu to have
             options = new List<Option>
                 {
-                    new Option("Rondleiding reserveren", () => ChooseMenu(options_reserveren)),
+                    new Option("Rondleiding reserveren", () => ChooseMenu(optionsReserveren)),
                     new Option("Rondleiding annuleren", () =>  WriteTemporaryMessage("Rondleiding is geannuleerd")),
                     new Option("Exit", () => Environment.Exit(0)),
                 };
 
-            options_reserveren = new List<Option>
+            optionsReserveren = new List<Option>
             {
-                new Option("11:00 -- 12:00", () => WriteTemporaryMessage("tijd 1")),
-                new Option("12:00 -- 13:00", () => WriteTemporaryMessage("tijd 2")),
-                new Option("13:00 -- 14:00", () => WriteTemporaryMessage("tijd 3")),
-                new Option("14:00 -- 15:00", () => WriteTemporaryMessage("tijd 4")),
-                new Option("15:00 -- 16:00", () => WriteTemporaryMessage("tijd 5")),
-                new Option("16:00 -- 17:00", () => WriteTemporaryMessage("tijd 6")),
-                new Option("17:00", () => WriteTemporaryMessage("tijd 7")),
+                new Option("11:00 -- 12:00", () => ChooseMenu(optionsMinutes, "11")),
+                new Option("12:00 -- 13:00", () => ChooseMenu(optionsMinutes, "12")),
+                new Option("13:00 -- 14:00", () => ChooseMenu(optionsMinutes, "13")),
+                new Option("14:00 -- 15:00", () => ChooseMenu(optionsMinutes, "14")),
+                new Option("15:00 -- 16:00", () => ChooseMenu(optionsMinutes, "15")),
+                new Option("16:00 -- 17:00", () => ChooseMenu(optionsMinutes, "16")),
+                new Option("17:00", () => WriteTemporaryMessage("17:00 is geselecteerd")),
+                new Option("Back", () => ChooseMenu(options))
             };
 
+            optionsMinutes = new List<Option>
+            {
+                new Option(reservationTime + ":00", () => WriteTemporaryMessage(reservationTime + ":00 is geselecteerd")),
+                new Option(reservationTime + ":20", () => WriteTemporaryMessage(reservationTime + ":20 is geselecteerd")),
+                new Option(reservationTime + ":40", () => WriteTemporaryMessage(reservationTime + ":40 is geselecteerd")),
+                new Option("Back", () => ChooseMenu(optionsReserveren))
+            };
             ChooseMenu(options);
         }
         // Default action of all the options. You can create more methods
@@ -35,12 +47,15 @@ namespace the_depot
         {
             Console.Clear();
             Console.WriteLine(message);
-            Thread.Sleep(3000);
-            WriteMenu(options_reserveren, options_reserveren.First());
+            Thread.Sleep(10000);
+            ChooseMenu(options);
         }
 
-        static void ChooseMenu(List<Option> options)
+        static void ChooseMenu(List<Option> options, string reserveTime = "")
         {
+            // Set the reservation hour
+            reservationTime = reserveTime;
+
             // Set the default index of the selected item to be the first
             int index = 0;
 
