@@ -7,5 +7,6 @@ namespace ConsoleApp
 {
     class Program
     {
+
     }
 }

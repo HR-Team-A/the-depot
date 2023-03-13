@@ -14,12 +14,6 @@ namespace the_depot
         static void Main(string[] args)
         {
             // Create options that you want your menu to have
-            options = new List<Option>
-                {
-                    new Option("Rondleiding reserveren", () => ChooseMenu(optionsReserveren)),
-                    new Option("Rondleiding annuleren", () =>  WriteTemporaryMessage("Rondleiding is geannuleerd")),
-                    new Option("Exit", () => Environment.Exit(0)),
-                };
 
             optionsReserveren = new List<Option>
             {
@@ -30,8 +24,10 @@ namespace the_depot
                 new Option("15:00 -- 16:00", () => ChooseMenu(optionsMinutes, "15")),
                 new Option("16:00 -- 17:00", () => ChooseMenu(optionsMinutes, "16")),
                 new Option("17:00", () => WriteTemporaryMessage("17:00 is geselecteerd")),
-                new Option("Back", () => ChooseMenu(options))
+                new Option("Rondleiding annuleren", () =>  WriteTemporaryMessage("Rondleiding is geannuleerd"))
             };
+
+            
 
             optionsMinutes = new List<Option>
             {
@@ -40,15 +36,20 @@ namespace the_depot
                 new Option(reservationTime + ":40", () => WriteTemporaryMessage(reservationTime + ":40 is geselecteerd")),
                 new Option("Back", () => ChooseMenu(optionsReserveren))
             };
-            ChooseMenu(options);
+
+            options = new List<Option>
+            {
+                new Option("Rondleiding annuleren", () =>  WriteTemporaryMessage("Rondleiding is geannuleerd")),
+            };
+            ChooseMenu(optionsReserveren);
         }
         // Default action of all the options. You can create more methods
         static void WriteTemporaryMessage(string message)
         {
             Console.Clear();
             Console.WriteLine(message);
-            Thread.Sleep(10000);
-            ChooseMenu(options);
+            Thread.Sleep(5000);
+            ChooseMenu(optionsReserveren);
         }
 
         static void ChooseMenu(List<Option> options, string reserveTime = "")
