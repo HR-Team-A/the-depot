@@ -7,10 +7,10 @@ namespace the_depot
 {
     public class Menu
     {
-        public static List<Option> options;
-        public static List<Option> optionsReserveren;
-        public static List<Option> optionsMinutes;
-        public static string reservationTime;
+        public static List<Option> options = new List<Option>();
+        public static List<Option> optionsReserveren = new List<Option>();
+        public static List<Option> optionsMinutes = new List<Option>();
+        public static string reservationTime = string.Empty;
         static void Main(string[] args)
         {
             // Create options that you want your menu to have
