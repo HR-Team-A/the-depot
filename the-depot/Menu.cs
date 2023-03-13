@@ -35,10 +35,6 @@ namespace the_depot
                 new Option("Back", () => ChooseMenu(optionsReserveren))
             };
 
-            options = new List<Option>
-            {
-                new Option("Rondleiding annuleren", () =>  WriteTemporaryMessage("Rondleiding is geannuleerd")),
-            };
             ChooseMenu(optionsReserveren);
         }
         // Default action of all the options. You can create more methods
