@@ -27,8 +27,6 @@ namespace the_depot
                 new Option("Rondleiding annuleren", () =>  WriteTemporaryMessage("Rondleiding is geannuleerd"))
             };
 
-            
-
             optionsMinutes = new List<Option>
             {
                 new Option(reservationTime + ":00", () => WriteTemporaryMessage(reservationTime + ":00 is geselecteerd")),
