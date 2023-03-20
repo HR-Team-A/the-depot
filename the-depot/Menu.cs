@@ -10,7 +10,6 @@ namespace the_depot
         public static List<Option> options = new List<Option>();
         public static List<Option> optionsReserveren = new List<Option>();
         public static List<Option> optionsMinutes = new List<Option>();
-        public static string reservationTime;
 
         static void Main(string[] args)
         {
@@ -22,30 +21,31 @@ namespace the_depot
             {
                 if (i < 1)
                 {
-                optionsReserveren.Add(new Option(dt.ToString("H:mm"), () => WriteTemporaryMessage("Ticket code input")));
+                optionsReserveren.Add(new Option(dt.ToString("H:mm"), () => WriteTemporaryMessage("Ticket code input"), DateTime.MinValue));
                     DateTime dtMinutes = dt;
                     for (int j = 0; j < 2; j++)
                     {
                         dtMinutes = dtMinutes.AddMinutes(20);
-                        optionsReserveren.Add(new Option("  " + dtMinutes.ToString("H:mm"), () => WriteTemporaryMessage("Ticket code input")));
+                        optionsReserveren.Add(new Option("  " + dtMinutes.ToString("H:mm"), () => WriteTemporaryMessage("Ticket code input"), DateTime.MinValue));
                     }
                 }
                 if (i >= 1)
                 {
-                    optionsReserveren.Add(new Option(dt.ToString("H:mm"), () => ChooseMenu(optionsMinutes, dt.ToString("HH"))));
+                    optionsReserveren.Add(new Option(dt.ToString("H:mm"), () => ChooseMenu(optionsMinutes), dt));
                 }
                 dt = dt.AddHours(1);
             };
 
-            optionsReserveren.Add(new Option("Rondleiding annuleren", () => WriteTemporaryMessage("Rondleiding is geannuleerd")));
-
             optionsMinutes = new List<Option>
             {
-                new Option(reservationTime + ":00", () => WriteTemporaryMessage(reservationTime + ":00 is geselecteerd")),
-                new Option(reservationTime + ":20", () => WriteTemporaryMessage(reservationTime + ":20 is geselecteerd")),
-                new Option(reservationTime + ":40", () => WriteTemporaryMessage(reservationTime + ":40 is geselecteerd")),
-                new Option("Back", () => ChooseMenu(optionsReserveren))
+                //new Option(ToString("HH:00"), () => WriteTemporaryMessage(resTime.ReservationTime.ToString("HH:00") + " is geselecteerd")),
+                //new Option(resTime.ReservationTime.ToString("HH:20"), () => WriteTemporaryMessage(resTime.ReservationTime.ToString("HH:20") + " is geselecteerd")),
+                //new Option(resTime.ReservationTime.ToString("HH:40"), () => WriteTemporaryMessage(resTime.ReservationTime.ToString("HH:40") + " is geselecteerd")),
+                //new Option("Back", () => ChooseMenu(optionsReserveren, DateTime.Now))
             };
+
+            optionsReserveren.Add(new Option("Rondleiding annuleren", () => WriteTemporaryMessage("Rondleiding is geannuleerd"), DateTime.MinValue));
+
             ChooseMenu(optionsReserveren);
         }
         // Default action of all the options. You can create more methods
@@ -57,10 +57,9 @@ namespace the_depot
             ChooseMenu(options);
         }
 
-        static void ChooseMenu(List<Option> options, string reserveTime = "")
+        static void ChooseMenu(List<Option> options)
         {
             // Set the reservation hour
-            reservationTime = reserveTime;
 
             // Set the default index of the selected item to be the first
             int index = 0;
@@ -125,9 +124,11 @@ namespace the_depot
     {
         public string Name { get; }
         public Action Selected { get; }
+        public DateTime Time { get; }
 
-        public Option(string name, Action selected)
+        public Option(string name, Action selected, DateTime time)
         {
+            Time = time;
             Name = name;
             Selected = selected;
         }
