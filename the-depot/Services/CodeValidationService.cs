@@ -1,6 +1,6 @@
 ﻿namespace the_depot.Services
 {
-    public static class CodeValidatieService
+    public static class CodeValidationService
     {
         public static Constants.Roles GetRole(string code)
         {

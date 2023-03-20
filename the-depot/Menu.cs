@@ -5,14 +5,14 @@ namespace the_depot
     public class Menu
     {
         public static List<Option> options = new List<Option>();
-        public static List<Option> optionsReserveren = new List<Option>();
+        public static List<Option> optionsReservation = new List<Option>();
         public static List<Option> optionsMinutes = new List<Option>();
         public static string reservationTime = string.Empty;
         static void Main(string[] args)
         {
             // Create options that you want your menu to have
 
-            optionsReserveren = new List<Option>
+            optionsReservation = new List<Option>
             {
                 new Option("11:00 -- 12:00", () => ChooseMenu(optionsMinutes, "11")),
                 new Option("12:00 -- 13:00", () => ChooseMenu(optionsMinutes, "12")),
@@ -29,10 +29,10 @@ namespace the_depot
                 new Option(reservationTime + ":00", () => WriteMessageAndCodeScan(reservationTime + ":00 is geselecteerd")),
                 new Option(reservationTime + ":20", () => WriteMessageAndCodeScan(reservationTime + ":20 is geselecteerd")),
                 new Option(reservationTime + ":40", () => WriteMessageAndCodeScan(reservationTime + ":40 is geselecteerd")),
-                new Option("Back", () => ChooseMenu(optionsReserveren))
+                new Option("Back", () => ChooseMenu(optionsReservation))
             };
 
-            ChooseMenu(optionsReserveren);
+            ChooseMenu(optionsReservation);
         }
         // Default action of all the options. You can create more methods
         static void WriteTemporaryMessage(string message)
@@ -40,7 +40,7 @@ namespace the_depot
             Console.Clear();
             Console.WriteLine(message);
             Thread.Sleep(5000);
-            ChooseMenu(optionsReserveren);
+            ChooseMenu(optionsReservation);
         }
 
         // scan the code and show the role
@@ -50,7 +50,7 @@ namespace the_depot
             Console.WriteLine(message);
             Console.WriteLine("Scan code:");
             var code = Console.ReadLine() ?? string.Empty;
-            WriteTemporaryMessage(CodeValidatieService.GetRole(code).ToString());
+            WriteTemporaryMessage(CodeValidationService\.GetRole(code).ToString());
 
         }
 
