@@ -25,7 +25,7 @@ namespace the_depot
                 new Option("15:00 -- 16:00", () => ChooseMenu(optionsMinutes, "15")),
                 new Option("16:00 -- 17:00", () => ChooseMenu(optionsMinutes, "16")),
                 new Option("17:00", () => WriteMessageAndCodeScan("17:00 is geselecteerd")),
-                new Option("Rondleiding annuleren", () =>  WriteTemporaryMessage("Rondleiding is geannuleerd"))
+                new Option("Rondleiding annuleren", () =>  CancelReservation("Rondleiding is geannuleerd"))
             };
 
             optionsMinutes = new List<Option>
@@ -54,8 +54,34 @@ namespace the_depot
             Console.WriteLine(message);
             Console.WriteLine("Scan code:");
             var code = Console.ReadLine() ?? string.Empty;
-            WriteTemporaryMessage(CodeValidationService.GetRole(code).ToString());
+            //temp messages 
+            switch (CodeValidationService.GetRole(code))
+            {
+                case (Constants.Roles.Visitor):
+                    WriteTemporaryMessage("Reservering is succesvol gemaakt");
+                    break;
+                case (Constants.Roles.Guide):
+                    WriteTemporaryMessage("Todo: rondleiding starten");
+                    break;
+                case (Constants.Roles.DepartmentHead):
+                    WriteTemporaryMessage("Reservering is succesvol gemaakt");
+                    break;
+                default:
+                    WriteTemporaryMessage("Code is niet geldig");
+                    break;
+            }
+        }
 
+        //cancel the reservation 
+        static void CancelReservation(string message)
+        {
+            Console.Clear();
+            Console.WriteLine("Scan code:");
+            var code = Console.ReadLine() ?? string.Empty;
+            if (CodeValidationService.GetRole(code) == Constants.Roles.Visitor)
+                WriteTemporaryMessage(message);
+            else
+                WriteTemporaryMessage("Code is niet geldig");
         }
 
         static void ChooseMenu(List<Option> options, string reserveTime = "")
