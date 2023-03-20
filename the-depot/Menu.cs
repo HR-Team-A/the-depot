@@ -1,7 +1,3 @@
-﻿using ConsoleApp;
-using System;
-using System.Media;
-using System.Windows;
 using the_depot.Services;
 
 namespace the_depot
