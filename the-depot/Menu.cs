@@ -1,4 +1,6 @@
-﻿using the_depot.Services;
+﻿using ConsoleApp;
+using the_depot.Models;
+using the_depot.Services;
 
 namespace the_depot
 {
@@ -10,6 +12,9 @@ namespace the_depot
         public static string reservationTime = string.Empty;
         static void Main(string[] args)
         {
+            Program.TryKey("test", out DayKey dayKey, out string error);
+            Console.WriteLine(error);
+            Console.WriteLine(dayKey.Key);
             // Create options that you want your menu to have
             optionsReservation = new List<Option>
             {
