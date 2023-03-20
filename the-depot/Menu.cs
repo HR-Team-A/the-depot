@@ -50,7 +50,21 @@ namespace the_depot
             Console.WriteLine(message);
             Console.WriteLine("Scan code:");
             var code = Console.ReadLine() ?? string.Empty;
-            WriteTemporaryMessage(CodeValidationService.GetRole(code).ToString());
+            switch (CodeValidationService.GetRole(code))
+            {
+                case (Constants.Roles.Visitor):
+                    WriteTemporaryMessage("Reservering is succesvol gemaakt");
+                    break;
+                case (Constants.Roles.Guide):
+                    WriteTemporaryMessage("Todo: rondleiding starten");
+                    break;
+                case (Constants.Roles.DepartmentHead):
+                    WriteTemporaryMessage("Reservering is succesvol gemaakt");
+                    break;
+                default:
+                    WriteTemporaryMessage("Code is niet geldig");
+                    break;
+            }
 
         }
 

@@ -4,6 +4,7 @@
     {
         public enum Roles
         {
+            None,
             Visitor,
             Guide,
             DepartmentHead

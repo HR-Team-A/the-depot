@@ -13,7 +13,7 @@
                 case "3":
                     return Constants.Roles.DepartmentHead;
                 default:
-                    return Constants.Roles.Visitor;
+                    return Constants.Roles.None;
             }
         }
     }
