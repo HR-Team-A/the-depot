@@ -4,9 +4,9 @@
     {
         public enum Roles
         {
-            Bezoeker,
-            Gids,
-            Afdelingshoofd
+            Visitor,
+            Guide,
+            DepartmentHead
         }
     }
 }

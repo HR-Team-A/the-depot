@@ -1,4 +1,4 @@
-using the_depot.Services;
+﻿using the_depot.Services;
 
 namespace the_depot
 {
@@ -43,14 +43,14 @@ namespace the_depot
             ChooseMenu(optionsReserveren);
         }
 
-        // Show message and scan code
+        // scan the code and show the role
         private static void WriteMessageAndCodeScan(string message)
         {
             Console.Clear();
             Console.WriteLine(message);
             Console.WriteLine("Scan code:");
             var code = Console.ReadLine() ?? string.Empty;
-            WriteTemporaryMessage(CodeValidatieService.getRole(code).ToString());
+            WriteTemporaryMessage(CodeValidatieService.GetRole(code).ToString());
 
         }
 
