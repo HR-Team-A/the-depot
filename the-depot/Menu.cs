@@ -12,9 +12,6 @@ namespace the_depot
         public static string reservationTime = string.Empty;
         static void Main(string[] args)
         {
-            Program.TryKey("test", out DayKey dayKey, out string error);
-            Console.WriteLine(error);
-            Console.WriteLine(dayKey.Key);
             // Create options that you want your menu to have
             optionsReservation = new List<Option>
             {
