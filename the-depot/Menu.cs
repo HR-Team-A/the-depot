@@ -50,7 +50,7 @@ namespace the_depot
             Console.WriteLine(message);
             Console.WriteLine("Scan code:");
             var code = Console.ReadLine() ?? string.Empty;
-            WriteTemporaryMessage(CodeValidationService\.GetRole(code).ToString());
+            WriteTemporaryMessage(CodeValidationService.GetRole(code).ToString());
 
         }
 
