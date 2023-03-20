@@ -1,4 +1,6 @@
-﻿using the_depot.Services;
+﻿using ConsoleApp;
+using the_depot.Models;
+using the_depot.Services;
 
 namespace the_depot
 {
@@ -11,7 +13,6 @@ namespace the_depot
         static void Main(string[] args)
         {
             // Create options that you want your menu to have
-
             optionsReservation = new List<Option>
             {
                 new Option("11:00 -- 12:00", () => ChooseMenu(optionsMinutes, "11")),
