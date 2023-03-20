@@ -14,6 +14,7 @@ namespace the_depot
         static void Main(string[] args)
         {
             // Create options that you want your menu to have
+            
 
             optionsReserveren = new List<Option>
             {
@@ -24,7 +25,7 @@ namespace the_depot
                 new Option("15:00 -- 16:00", () => ChooseMenu(optionsMinutes, "15")),
                 new Option("16:00 -- 17:00", () => ChooseMenu(optionsMinutes, "16")),
                 new Option("17:00", () => WriteTemporaryMessage("17:00 is geselecteerd")),
-                new Option("Rondleiding annuleren", () =>  WriteTemporaryMessage("Rondleiding is geannuleerd"))
+                new Option("Rondleiding annuleren", () =>  WriteTemporaryMessage("Rondleiding is geannuleerd")),
             };
 
             optionsMinutes = new List<Option>
