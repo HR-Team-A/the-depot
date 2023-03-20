@@ -7,31 +7,37 @@ namespace the_depot
 {
     public class Menu
     {
-        public static List<Option> options;
-        public static List<Option> optionsReserveren;
-        public static List<Option> optionsMinutes;
+        public static List<Option> options = new List<Option>();
+        public static List<Option> optionsReserveren = new List<Option>();
+        public static List<Option> optionsMinutes = new List<Option>();
         public static string reservationTime;
+
         static void Main(string[] args)
         {
             // Create options that you want your menu to have
-            options = new List<Option>
-                {
-                    new Option("Rondleiding reserveren", () => ChooseMenu(optionsReserveren)),
-                    new Option("Rondleiding annuleren", () =>  WriteTemporaryMessage("Rondleiding is geannuleerd")),
-                    new Option("Exit", () => Environment.Exit(0)),
-                };
+            DateTime dt = DateTime.Parse("11:00:00 AM");
 
-            optionsReserveren = new List<Option>
+            optionsReserveren = new List<Option>();
+            for (int i = 0; i < 7; i++)
             {
-                new Option("11:00 -- 12:00", () => ChooseMenu(optionsMinutes, "11")),
-                new Option("12:00 -- 13:00", () => ChooseMenu(optionsMinutes, "12")),
-                new Option("13:00 -- 14:00", () => ChooseMenu(optionsMinutes, "13")),
-                new Option("14:00 -- 15:00", () => ChooseMenu(optionsMinutes, "14")),
-                new Option("15:00 -- 16:00", () => ChooseMenu(optionsMinutes, "15")),
-                new Option("16:00 -- 17:00", () => ChooseMenu(optionsMinutes, "16")),
-                new Option("17:00", () => WriteTemporaryMessage("17:00 is geselecteerd")),
-                new Option("Back", () => ChooseMenu(options))
+                if (i < 1)
+                {
+                optionsReserveren.Add(new Option(dt.ToString("H:mm"), () => WriteTemporaryMessage("Ticket code input")));
+                    DateTime dtMinutes = dt;
+                    for (int j = 0; j < 2; j++)
+                    {
+                        dtMinutes = dtMinutes.AddMinutes(20);
+                        optionsReserveren.Add(new Option("  " + dtMinutes.ToString("H:mm"), () => WriteTemporaryMessage("Ticket code input")));
+                    }
+                }
+                if (i >= 1)
+                {
+                    optionsReserveren.Add(new Option(dt.ToString("H:mm"), () => ChooseMenu(optionsMinutes, dt.ToString("HH"))));
+                }
+                dt = dt.AddHours(1);
             };
+
+            optionsReserveren.Add(new Option("Rondleiding annuleren", () => WriteTemporaryMessage("Rondleiding is geannuleerd")));
 
             optionsMinutes = new List<Option>
             {
@@ -40,7 +46,7 @@ namespace the_depot
                 new Option(reservationTime + ":40", () => WriteTemporaryMessage(reservationTime + ":40 is geselecteerd")),
                 new Option("Back", () => ChooseMenu(optionsReserveren))
             };
-            ChooseMenu(options);
+            ChooseMenu(optionsReserveren);
         }
         // Default action of all the options. You can create more methods
         static void WriteTemporaryMessage(string message)
