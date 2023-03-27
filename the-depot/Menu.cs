@@ -23,22 +23,22 @@ namespace the_depot
             {
                 if (i < 6)
                 {
-                    optionsReservation.Add(new Option(dt.ToString("H:mm"), () => WriteTemporaryMessage("Ticket code input"), DateTime.MinValue));
+                    optionsReservation.Add(new Option(dt.ToString("H:mm"), () => WriteMessageAndCodeScan($"{dt.ToString("H:mm")} is geselecteerd"), DateTime.MinValue));
                     DateTime dtMinutes = dt;
                     for (int j = 0; j < 2; j++)
                     {
                         dtMinutes = dtMinutes.AddMinutes(20);
-                        optionsReservation.Add(new Option("  " + dtMinutes.ToString("H:mm"), () => WriteTemporaryMessage("Ticket code input"), DateTime.MinValue));
+                        optionsReservation.Add(new Option("  " + dtMinutes.ToString("H:mm"), () => WriteMessageAndCodeScan($"{dtMinutes.ToString("H:mm")} is geselecteerd"), DateTime.MinValue));
                     }
                 }
                 if (i >= 6)
                 {
-                    optionsReservation.Add(new Option(dt.ToString("H:mm"), () => WriteTemporaryMessage("Ticket code input"), DateTime.MinValue));
+                    optionsReservation.Add(new Option(dt.ToString("H:mm"), () => WriteMessageAndCodeScan($"{dt.ToString("H:mm")} is geselecteerd"), DateTime.MinValue));
                 }
                 dt = dt.AddHours(1);
             };
 
-            optionsReservation.Add(new Option("Rondleiding annuleren", () => WriteTemporaryMessage("Rondleiding is geannuleerd"), DateTime.MinValue));
+            optionsReservation.Add(new Option("Rondleiding annuleren", () => CancelReservation("Rondleiding is geannuleerd"), DateTime.MinValue));
 
             ChooseMenu(optionsReservation);
         }
