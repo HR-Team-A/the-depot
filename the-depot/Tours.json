@@ -1,0 +1,120 @@
+﻿[
+  {
+    "Time": "11:00",
+    "MaxAttendees": 13,
+    "Enabled": false,
+    "Attendees": [
+      {
+        "VisitorKey": "123456789876543234567887654345678"
+      }
+    ]
+  },
+  {
+    "Time": "11:20",
+    "MaxAttendees": 13,
+    "Enabled": false,
+    "Attendees": []
+  },
+  {
+    "Time": "11:40",
+    "MaxAttendees": 13,
+    "Enabled": false,
+    "Attendees": []
+  },
+  {
+    "Time": "12:00",
+    "MaxAttendees": 13,
+    "Enabled": false,
+    "Attendees": []
+  },
+  {
+    "Time": "12:20",
+    "MaxAttendees": 13,
+    "Enabled": false,
+    "Attendees": []
+  },
+  {
+    "Time": "12:40",
+    "MaxAttendees": 13,
+    "Enabled": false,
+    "Attendees": []
+  },
+  {
+    "Time": "13:00",
+    "MaxAttendees": 13,
+    "Enabled": false,
+    "Attendees": []
+  },
+  {
+    "Time": "13:20",
+    "MaxAttendees": 13,
+    "Enabled": false,
+    "Attendees": []
+  },
+  {
+    "Time": "13:40",
+    "MaxAttendees": 13,
+    "Enabled": false,
+    "Attendees": []
+  },
+  {
+    "Time": "14:00",
+    "MaxAttendees": 13,
+    "Enabled": false,
+    "Attendees": []
+  },
+  {
+    "Time": "14:20",
+    "MaxAttendees": 13,
+    "Enabled": false,
+    "Attendees": []
+  },
+  {
+    "Time": "14:40",
+    "MaxAttendees": 13,
+    "Enabled": false,
+    "Attendees": []
+  },
+  {
+    "Time": "15:00",
+    "MaxAttendees": 13,
+    "Enabled": false,
+    "Attendees": []
+  },
+  {
+    "Time": "15:20",
+    "MaxAttendees": 13,
+    "Enabled": false,
+    "Attendees": []
+  },
+  {
+    "Time": "15:40",
+    "MaxAttendees": 13,
+    "Enabled": false,
+    "Attendees": []
+  },
+  {
+    "Time": "16:00",
+    "MaxAttendees": 13,
+    "Enabled": false,
+    "Attendees": []
+  },
+  {
+    "Time": "16:20",
+    "MaxAttendees": 13,
+    "Enabled": false,
+    "Attendees": []
+  },
+  {
+    "Time": "16:40",
+    "MaxAttendees": 13,
+    "Enabled": false,
+    "Attendees": []
+  },
+  {
+    "Time": "17:00",
+    "MaxAttendees": 13,
+    "Enabled": false,
+    "Attendees": []
+  }
+]
