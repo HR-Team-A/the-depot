@@ -65,8 +65,12 @@ namespace the_depot
                 WriteTemporaryMessage("Code bestaat niet");
                 return;
             }
-            
-            Console.WriteLine(dayKey.Role);
+            var isValid = CodeValidationService.Validate(dayKey);
+            if (!isValid)
+            {
+                WriteTemporaryMessage("Code is niet geldig");
+                return;
+            }
             
             switch (dayKey.Role)
             {
