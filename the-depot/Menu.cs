@@ -1,7 +1,6 @@
 ﻿using ConsoleApp;
-using System;
-using System.Media;
-using System.Windows;
+using the_depot.Models;
+using the_depot.Services;
 
 namespace the_depot
 {
@@ -45,8 +44,45 @@ namespace the_depot
         {
             Console.Clear();
             Console.WriteLine(message);
-            Thread.Sleep(10000);
-            ChooseMenu(optionsReserveren);
+            Thread.Sleep(5000);
+            ChooseMenu(optionsReservation);
+        }
+
+        // scan the code and show the role
+        private static void WriteMessageAndCodeScan(string message)
+        {
+            Console.Clear();
+            Console.WriteLine(message);
+            Console.WriteLine("Scan code:");
+            var code = Console.ReadLine() ?? string.Empty;
+            //temp messages 
+            switch (CodeValidationService.GetRole(code))
+            {
+                case (Constants.Roles.Visitor):
+                    WriteTemporaryMessage("Reservering is succesvol gemaakt");
+                    break;
+                case (Constants.Roles.Guide):
+                    WriteTemporaryMessage("Todo: rondleiding starten");
+                    break;
+                case (Constants.Roles.DepartmentHead):
+                    WriteTemporaryMessage("Reservering is succesvol gemaakt");
+                    break;
+                default:
+                    WriteTemporaryMessage("Code is niet geldig");
+                    break;
+            }
+        }
+
+        //cancel the reservation 
+        static void CancelReservation(string message)
+        {
+            Console.Clear();
+            Console.WriteLine("Scan code:");
+            var code = Console.ReadLine() ?? string.Empty;
+            if (CodeValidationService.GetRole(code) == Constants.Roles.Visitor)
+                WriteTemporaryMessage(message);
+            else
+                WriteTemporaryMessage("Code is niet geldig");
         }
 
         static void ChooseMenu(List<Option> options)
