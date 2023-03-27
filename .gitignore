@@ -6,3 +6,4 @@
 /the-depot/bin/Debug/net6.0
 /the-depot/obj
 /.vs
+.DS_Store
