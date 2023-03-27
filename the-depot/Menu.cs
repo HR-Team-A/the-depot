@@ -1,4 +1,4 @@
-﻿using ConsoleApp;
+using ConsoleApp;
 using System;
 using System.Media;
 using System.Windows;
@@ -21,7 +21,7 @@ namespace the_depot
             {
                 if (i < 6)
                 {
-                optionsReserveren.Add(new Option(dt.ToString("H:mm"), () => WriteTemporaryMessage("Ticket code input"), DateTime.MinValue));
+                    optionsReserveren.Add(new Option(dt.ToString("H:mm"), () => WriteTemporaryMessage("Ticket code input"), DateTime.MinValue));
                     DateTime dtMinutes = dt;
                     for (int j = 0; j < 2; j++)
                     {
