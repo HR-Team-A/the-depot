@@ -40,11 +40,20 @@ namespace the_depot.Services
         /// </summary>
         /// <param name="key"></param>
         /// <returns>if operation succeeded</returns>
-        public static bool SetDayKeyUsed(string key)
+        public static bool SetDayKeyUsed(string key, out string error)
         {
+            error = string.Empty;
             var daykey = DayKeys.FirstOrDefault(x => x.Key == key);
             if (daykey == null)
+            {
+                error = "De code bestaat niet";
                 return false;
+            }
+            if (daykey.Used)
+            {
+                error = $"Deze code is al gebruikt op {daykey.UsedOnDate.ToString("dd-MM-yyyy HH:mm")} om een reservering te maken, annuleer eerst deze reservering om een andere reservering te kunnen plaatsen";
+                return false;
+            }
             daykey.Used = true;
             daykey.UsedOnDate = DateTime.Now;
             SaveData();
