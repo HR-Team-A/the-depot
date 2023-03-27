@@ -19,7 +19,7 @@ namespace the_depot
             optionsReserveren = new List<Option>();
             for (int i = 0; i < 7; i++)
             {
-                if (i < 1)
+                if (i < 6)
                 {
                 optionsReserveren.Add(new Option(dt.ToString("H:mm"), () => WriteTemporaryMessage("Ticket code input"), DateTime.MinValue));
                     DateTime dtMinutes = dt;
@@ -29,19 +29,11 @@ namespace the_depot
                         optionsReserveren.Add(new Option("  " + dtMinutes.ToString("H:mm"), () => WriteTemporaryMessage("Ticket code input"), DateTime.MinValue));
                     }
                 }
-                if (i >= 1)
+                if (i >= 6)
                 {
-                    optionsReserveren.Add(new Option(dt.ToString("H:mm"), () => ChooseMenu(optionsMinutes), dt));
+                    optionsReserveren.Add(new Option(dt.ToString("H:mm"), () => WriteTemporaryMessage("Ticket code input"), DateTime.MinValue));
                 }
                 dt = dt.AddHours(1);
-            };
-
-            optionsMinutes = new List<Option>
-            {
-                //new Option(ToString("HH:00"), () => WriteTemporaryMessage(resTime.ReservationTime.ToString("HH:00") + " is geselecteerd")),
-                //new Option(resTime.ReservationTime.ToString("HH:20"), () => WriteTemporaryMessage(resTime.ReservationTime.ToString("HH:20") + " is geselecteerd")),
-                //new Option(resTime.ReservationTime.ToString("HH:40"), () => WriteTemporaryMessage(resTime.ReservationTime.ToString("HH:40") + " is geselecteerd")),
-                //new Option("Back", () => ChooseMenu(optionsReserveren, DateTime.Now))
             };
 
             optionsReserveren.Add(new Option("Rondleiding annuleren", () => WriteTemporaryMessage("Rondleiding is geannuleerd"), DateTime.MinValue));
@@ -54,7 +46,7 @@ namespace the_depot
             Console.Clear();
             Console.WriteLine(message);
             Thread.Sleep(10000);
-            ChooseMenu(options);
+            ChooseMenu(optionsReserveren);
         }
 
         static void ChooseMenu(List<Option> options)
