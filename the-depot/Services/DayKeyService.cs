@@ -67,6 +67,9 @@ namespace the_depot.Services
             return true;
         }
 
+        /// <summary>
+        /// data data to file
+        /// </summary>
         private static void SaveData()
         {
             string dayKeys = JsonSerializer.Serialize(DayKeys, new JsonSerializerOptions { WriteIndented = true});
