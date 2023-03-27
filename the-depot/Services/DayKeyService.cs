@@ -1,4 +1,6 @@
 ﻿using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
 using the_depot.Models;
 
 namespace the_depot.Services
@@ -6,15 +8,21 @@ namespace the_depot.Services
     static public class DayKeyService
     {
         private static List<DayKey> DayKeys = new List<DayKey>();
+        private static string Path = "../../../Keys.json";
+        private static string PathEmployees = "../../../KeysEmployees.json";
 
         /// <summary>
         /// load all daykeys
         /// </summary>
         public static void LoadDayKeys()
         {
-            var json = File.ReadAllText("../../../Keys.json");
+            var json = File.ReadAllText(Path);
             List<DayKey> dayKeys = JsonSerializer.Deserialize<List<DayKey>>(json) ?? new List<DayKey>();
             DayKeys = dayKeys;
+
+            json = File.ReadAllText(PathEmployees);
+            dayKeys = JsonSerializer.Deserialize<List<DayKey>>(json) ?? new List<DayKey>();
+            DayKeys.AddRange(dayKeys);
         }
 
         /// <summary>
@@ -39,6 +47,7 @@ namespace the_depot.Services
                 return false;
             daykey.Used = true;
             daykey.UsedOnDate = DateTime.Now;
+            SaveData();
             return true;
         }
 
@@ -54,7 +63,14 @@ namespace the_depot.Services
                 return false;
             daykey.Used = false;
             daykey.UsedOnDate = DateTime.Now;
+            SaveData();
             return true;
+        }
+
+        private static void SaveData()
+        {
+            string dayKeys = JsonSerializer.Serialize(DayKeys, new JsonSerializerOptions { WriteIndented = true});
+            File.WriteAllText(Path, dayKeys);
         }
     }
 }

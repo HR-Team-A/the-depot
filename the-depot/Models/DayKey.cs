@@ -12,7 +12,7 @@ namespace the_depot.Models
 
         public DateTime UsedOnDate { get; set; }
 
-        public Roles Role { get; set; }
+        public Roles Role { get; set; } = Roles.Visitor;
     }
 }
 
