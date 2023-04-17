@@ -16,26 +16,26 @@ namespace the_depot
             DayKeyService.LoadDayKeys();
 
             // Create options that you want your menu to have
-            DateTime dt = DateTime.Parse("11:00:00 AM");
+            DateTime tourTime = DateTime.Parse("11:00:00 AM");
 
             optionsReservation = new List<Option>();
             for (int i = 0; i < 7; i++)
             {
                 if (i < 6)
                 {
-                    optionsReservation.Add(new Option(dt.ToString("H:mm"), () => WriteMessageAndCodeScan($"{dt.ToString("H:mm")} is geselecteerd"), DateTime.MinValue));
-                    DateTime dtMinutes = dt;
+                    optionsReservation.Add(new Option(tourTime.ToString("H:mm"), () => WriteMessageAndCodeScan($"{tourTime.ToString("H:mm")} is geselecteerd"), DateTime.MinValue));
+                    DateTime tourTimeMinutes = tourTime;
                     for (int j = 0; j < 2; j++)
                     {
-                        dtMinutes = dtMinutes.AddMinutes(20);
-                        optionsReservation.Add(new Option("  " + dtMinutes.ToString("H:mm"), () => WriteMessageAndCodeScan($"{dtMinutes.ToString("H:mm")} is geselecteerd"), DateTime.MinValue));
+                        tourTimeMinutes = tourTimeMinutes.AddMinutes(20);
+                        optionsReservation.Add(new Option("  " + tourTimeMinutes.ToString("H:mm"), () => WriteMessageAndCodeScan($"{tourTimeMinutes.ToString("H:mm")} is geselecteerd"), DateTime.MinValue));
                     }
                 }
                 if (i >= 6)
                 {
-                    optionsReservation.Add(new Option(dt.ToString("H:mm"), () => WriteMessageAndCodeScan($"{dt.ToString("H:mm")} is geselecteerd"), DateTime.MinValue));
+                    optionsReservation.Add(new Option(tourTime.ToString("H:mm"), () => WriteMessageAndCodeScan($"{tourTime.ToString("H:mm")} is geselecteerd"), DateTime.MinValue));
                 }
-                dt = dt.AddHours(1);
+                tourTime = tourTime.AddHours(1);
             };
 
             optionsReservation.Add(new Option("Rondleiding annuleren", () => CancelReservation("Rondleiding is geannuleerd"), DateTime.MinValue));
