@@ -57,8 +57,26 @@ namespace the_depot
             Console.WriteLine(message);
             Console.WriteLine("Scan code:");
             var code = Console.ReadLine() ?? string.Empty;
-            //temp messages 
-            switch (CodeValidationService.GetRole(code))
+            
+            DayKeyService.LoadDayKeys();
+
+            var dayKey = DayKeyService.GetDayKey(code);
+            
+            // Code does not exist
+            if (dayKey == null)
+            {
+                WriteTemporaryMessage("Code bestaat niet");
+                return;
+            }
+            
+            var isValid = CodeValidationService.Validate(dayKey);
+            if (!isValid)
+            {
+                WriteTemporaryMessage("Code is niet geldig");
+                return;
+            }
+            
+            switch (dayKey.Role)
             {
                 case (Constants.Roles.Visitor):
                     DayKeyService.SetDayKeyUsed(code, out string error);

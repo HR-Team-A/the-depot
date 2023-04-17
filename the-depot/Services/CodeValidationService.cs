@@ -1,4 +1,6 @@
-﻿namespace the_depot.Services
+﻿using the_depot.Models;
+
+namespace the_depot.Services
 {
     public static class CodeValidationService
     {
@@ -15,6 +17,11 @@
                 default:
                     return Constants.Roles.None;
             }
+        }
+
+        public static bool Validate(DayKey dayKey)
+        {
+            return dayKey.Used == false;
         }
     }
 }
