@@ -12,6 +12,9 @@ namespace the_depot
         public static string reservationTime = string.Empty;
         static void Main(string[] args)
         {
+            //load files
+            DayKeyService.LoadDayKeys();
+
             // Create options that you want your menu to have
             optionsReservation = new List<Option>
             {
@@ -55,7 +58,13 @@ namespace the_depot
             switch (CodeValidationService.GetRole(code))
             {
                 case (Constants.Roles.Visitor):
-                    WriteTemporaryMessage("Reservering is succesvol gemaakt");
+                    DayKeyService.SetDayKeyUsed(code, out string error);
+                    if(string.IsNullOrEmpty(error))
+                        WriteTemporaryMessage("Reservering is succesvol gemaakt");
+                    else
+                    {
+                        WriteTemporaryMessage(error);
+                    }
                     break;
                 case (Constants.Roles.Guide):
                     WriteTemporaryMessage("Todo: rondleiding starten");
@@ -76,7 +85,10 @@ namespace the_depot
             Console.WriteLine("Scan code:");
             var code = Console.ReadLine() ?? string.Empty;
             if (CodeValidationService.GetRole(code) == Constants.Roles.Visitor)
+            {
+                DayKeyService.CancelReservation(code);
                 WriteTemporaryMessage(message);
+            }
             else
                 WriteTemporaryMessage("Code is niet geldig");
         }
