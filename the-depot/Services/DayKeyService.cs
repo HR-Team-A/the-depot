@@ -9,7 +9,6 @@ namespace the_depot.Services
     {
         private static List<DayKey> DayKeys = new List<DayKey>();
         private static string Path = "../../../Keys.json";
-        private static string PathEmployees = "../../../KeysEmployees.json";
 
         /// <summary>
         /// load all daykeys
@@ -19,10 +18,6 @@ namespace the_depot.Services
             var json = File.ReadAllText(Path);
             List<DayKey> dayKeys = JsonSerializer.Deserialize<List<DayKey>>(json) ?? new List<DayKey>();
             DayKeys = dayKeys;
-
-            json = File.ReadAllText(PathEmployees);
-            dayKeys = JsonSerializer.Deserialize<List<DayKey>>(json) ?? new List<DayKey>();
-            DayKeys.AddRange(dayKeys);
         }
 
         /// <summary>

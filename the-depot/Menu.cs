@@ -1,4 +1,4 @@
-﻿using ConsoleApp;
+using ConsoleApp;
 using the_depot.Models;
 using the_depot.Services;
 
@@ -9,32 +9,35 @@ namespace the_depot
         public static List<Option> options = new List<Option>();
         public static List<Option> optionsReservation = new List<Option>();
         public static List<Option> optionsMinutes = new List<Option>();
-        public static string reservationTime = string.Empty;
+
         static void Main(string[] args)
         {
             //load files
             DayKeyService.LoadDayKeys();
 
             // Create options that you want your menu to have
-            optionsReservation = new List<Option>
+            DateTime tourTime = DateTime.Parse("11:00:00 AM");
+
+            optionsReservation = new List<Option>();
+            for (int i = 0; i < 7; i++)
             {
-                new Option("11:00 -- 12:00", () => ChooseMenu(optionsMinutes, "11")),
-                new Option("12:00 -- 13:00", () => ChooseMenu(optionsMinutes, "12")),
-                new Option("13:00 -- 14:00", () => ChooseMenu(optionsMinutes, "13")),
-                new Option("14:00 -- 15:00", () => ChooseMenu(optionsMinutes, "14")),
-                new Option("15:00 -- 16:00", () => ChooseMenu(optionsMinutes, "15")),
-                new Option("16:00 -- 17:00", () => ChooseMenu(optionsMinutes, "16")),
-                new Option("17:00", () => WriteMessageAndCodeScan("17:00 is geselecteerd")),
-                new Option("Rondleiding annuleren", () =>  CancelReservation("Rondleiding is geannuleerd"))
+                if (i < 6)
+                {
+                    AddOption(tourTime, false);
+                    for (int j = 0; j < 2; j++)
+                    {
+                        tourTime = tourTime.AddMinutes(20);
+                        AddOption(tourTime, true);
+                    }
+                }
+                if (i >= 6)
+                {
+                    AddOption(tourTime, false);
+                }
+                tourTime = tourTime.AddMinutes(20);
             };
 
-            optionsMinutes = new List<Option>
-            {
-                new Option(reservationTime + ":00", () => WriteMessageAndCodeScan(reservationTime + ":00 is geselecteerd")),
-                new Option(reservationTime + ":20", () => WriteMessageAndCodeScan(reservationTime + ":20 is geselecteerd")),
-                new Option(reservationTime + ":40", () => WriteMessageAndCodeScan(reservationTime + ":40 is geselecteerd")),
-                new Option("Back", () => ChooseMenu(optionsReservation))
-            };
+            optionsReservation.Add(new Option("Rondleiding annuleren", () => CancelReservation("Rondleiding is geannuleerd"), DateTime.MinValue));
 
             ChooseMenu(optionsReservation);
         }
@@ -111,10 +114,9 @@ namespace the_depot
                 WriteTemporaryMessage("Code is niet geldig");
         }
 
-        static void ChooseMenu(List<Option> options, string reserveTime = "")
+        static void ChooseMenu(List<Option> options)
         {
             // Set the reservation hour
-            reservationTime = reserveTime;
 
             // Set the default index of the selected item to be the first
             int index = 0;
@@ -174,14 +176,28 @@ namespace the_depot
                 Console.WriteLine(option.Name);
             }
         }
+
+        static void AddOption(DateTime tourTime, bool isTabbed)
+        {
+            if (isTabbed)
+            {
+                optionsReservation.Add(new Option("  " + tourTime.ToString("H:mm"), () => WriteMessageAndCodeScan($"{tourTime.ToString("H:mm")} is geselecteerd"), DateTime.MinValue));
+            }
+            else
+            {
+                optionsReservation.Add(new Option(tourTime.ToString("H:mm"), () => WriteMessageAndCodeScan($"{tourTime.ToString("H:mm")} is geselecteerd"), DateTime.MinValue));
+            }
+        }
     }
     public class Option
     {
         public string Name { get; }
         public Action Selected { get; }
+        public DateTime Time { get; }
 
-        public Option(string name, Action selected)
+        public Option(string name, Action selected, DateTime time)
         {
+            Time = time;
             Name = name;
             Selected = selected;
         }
