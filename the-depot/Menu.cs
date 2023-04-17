@@ -23,19 +23,18 @@ namespace the_depot
             {
                 if (i < 6)
                 {
-                    optionsReservation.Add(new Option(tourTime.ToString("H:mm"), () => WriteMessageAndCodeScan($"{tourTime.ToString("H:mm")} is geselecteerd"), DateTime.MinValue));
-                    DateTime tourTimeMinutes = tourTime;
+                    AddOption(tourTime, false);
                     for (int j = 0; j < 2; j++)
                     {
-                        tourTimeMinutes = tourTimeMinutes.AddMinutes(20);
-                        optionsReservation.Add(new Option("  " + tourTimeMinutes.ToString("H:mm"), () => WriteMessageAndCodeScan($"{tourTimeMinutes.ToString("H:mm")} is geselecteerd"), DateTime.MinValue));
+                        tourTime = tourTime.AddMinutes(20);
+                        AddOption(tourTime, true);
                     }
                 }
                 if (i >= 6)
                 {
-                    optionsReservation.Add(new Option(tourTime.ToString("H:mm"), () => WriteMessageAndCodeScan($"{tourTime.ToString("H:mm")} is geselecteerd"), DateTime.MinValue));
+                    AddOption(tourTime, false);
                 }
-                tourTime = tourTime.AddHours(1);
+                tourTime = tourTime.AddMinutes(20);
             };
 
             optionsReservation.Add(new Option("Rondleiding annuleren", () => CancelReservation("Rondleiding is geannuleerd"), DateTime.MinValue));
@@ -157,6 +156,18 @@ namespace the_depot
                 }
 
                 Console.WriteLine(option.Name);
+            }
+        }
+
+        static void AddOption(DateTime tourTime, bool isTabbed)
+        {
+            if (isTabbed)
+            {
+                optionsReservation.Add(new Option("  " + tourTime.ToString("H:mm"), () => WriteMessageAndCodeScan($"{tourTime.ToString("H:mm")} is geselecteerd"), DateTime.MinValue));
+            }
+            else
+            {
+                optionsReservation.Add(new Option(tourTime.ToString("H:mm"), () => WriteMessageAndCodeScan($"{tourTime.ToString("H:mm")} is geselecteerd"), DateTime.MinValue));
             }
         }
     }
