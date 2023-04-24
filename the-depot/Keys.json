@@ -50,9 +50,8 @@
     "Role": 2
   },
   {
+    "Id": 11,
     "Key": "jajajaja",
-    "Used": false,
-    "UsedOnDate": "0001-01-01T00:00:00",
     "Role": 1
   }
 ]

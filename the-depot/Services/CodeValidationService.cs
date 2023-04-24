@@ -18,10 +18,5 @@ namespace the_depot.Services
                     return Constants.Roles.None;
             }
         }
-
-        public static bool Validate(DayKey dayKey)
-        {
-            return dayKey.Used == false;
-        }
     }
 }
