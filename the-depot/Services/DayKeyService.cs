@@ -34,14 +34,5 @@ namespace the_depot.Services
         {
             return DayKeys;
         }
-
-        /// <summary>
-        /// data data to file
-        /// </summary>
-        private static void SaveData()
-        {
-            string dayKeys = JsonSerializer.Serialize(DayKeys, new JsonSerializerOptions { WriteIndented = true});
-            File.WriteAllText(Path, dayKeys);
-        }
     }
 }

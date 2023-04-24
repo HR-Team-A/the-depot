@@ -7,9 +7,7 @@ namespace the_depot.Models
     public class DayKey
     {
         public int Id { get; set; }
-
         public string Key { get; set; } = string.Empty;
-
         public Roles Role { get; set; } = Roles.Visitor;
     }
 }
