@@ -1,8 +1,6 @@
 using ConsoleApp;
 using the_depot.Models;
 using the_depot.Services;
-using System.Media;
-using System.Security.Cryptography.X509Certificates;
 
 namespace the_depot
 {
