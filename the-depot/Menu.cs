@@ -83,19 +83,20 @@ namespace the_depot
                             {
                                 WriteTemporaryMessage(error);
                             }
-                            break;
-                            case (Constants.Roles.Guide):
-                                TourService.StartTour(tour_Id);
-                                WriteMessageAndCodeScan("Rondleiding gestart, laat de bezoekers hun code scannen:", true, tour_Id);
-                                break;
-                            case (Constants.Roles.DepartmentHead):
-                                if (!tourStarted)
-                                    WriteTemporaryMessage("DepartmentHead");
-                                break;
-                            default:
-                                WriteTemporaryMessage("Code is niet geldig");
-                                break;
                         }
+                        break;
+                    case (Constants.Roles.Guide):
+                        TourService.StartTour(tour_Id);
+                        WriteMessageAndCodeScan("Rondleiding gestart, laat de bezoekers hun code scannen:", true, tour_Id);
+                        break;
+                    case (Constants.Roles.DepartmentHead):
+                        if (!tourStarted)
+                            WriteTemporaryMessage("DepartmentHead");
+                        break;
+                    default:
+                        WriteTemporaryMessage("Code is niet geldig");
+                        break;
+
                 }
             }
             else
@@ -250,7 +251,7 @@ namespace the_depot
             }
 
             optionsReservation.Add(new Option("Rondleiding annuleren", () => CancelReservation("Rondleiding is geannuleerd"), DateTime.MinValue));
-            optionsReservation.Add(new Option("Admin scherm", () => WriteMessageAndCodeScan("", false, tour_Id, true), DateTime.MinValue));
+            optionsReservation.Add(new Option("Admin scherm", () => WriteMessageAndCodeScan("", false, 0, true), DateTime.MinValue));
         }
     }
     public class Option
