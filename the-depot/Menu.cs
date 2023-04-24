@@ -1,8 +1,6 @@
 using ConsoleApp;
 using the_depot.Models;
 using the_depot.Services;
-using System.Media;
-using System.Security.Cryptography.X509Certificates;
 
 namespace the_depot
 {
@@ -155,7 +153,7 @@ namespace the_depot
                  out date))
             {
                 Console.Clear();
-                Console.WriteLine("Vul een datum in:");
+                Console.WriteLine("Vul een datum in (dd/mm/yyyy):");
                 Console.WriteLine("Verkeerde input. Probeer opnieuw.");
             }
             Console.Clear();
