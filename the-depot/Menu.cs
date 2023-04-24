@@ -12,7 +12,7 @@ namespace the_depot
 
         static void Main(string[] args)
         {
-            //load files
+            // Load files
             DayKeyService.LoadDayKeys();
             LoadReservationOptions();
             ChooseMenu(optionsReservation);
@@ -46,14 +46,10 @@ namespace the_depot
             if (dayKey == null)
             {
                 if (!tourStarted)
-                {
                     WriteTemporaryMessage("Code bestaat niet");
-                    return;
-                }
                 else
-                {
-                    WriteMessageAndCodeScan("Uw code is niet gevonden", true, tour_Id);
-                }
+                    WriteMessageAndCodeScan("Uw code is niet gevonden", true, tour_Id); 
+                return;
             }
 
             switch (dayKey.Role)
@@ -65,6 +61,7 @@ namespace the_depot
                         if (string.IsNullOrEmpty(error))
                         {
                             WriteMessageAndCodeScan("U ben successvol aangemeld, laat de volgende bezoeker hun code scannen", true, tour_Id);
+                            return;
                         }
                         WriteMessageAndCodeScan(error, true, tour_Id);
                     }
