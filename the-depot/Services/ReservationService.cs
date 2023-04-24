@@ -18,17 +18,17 @@ namespace the_depot.Services
             return reservations;
         }
 
-        public static void SetReservationAttended(int dayKey_Id)
+        public static string SetReservationAttended(int dayKey_Id, int tour_Id)
         {
-            DayKeyService.LoadDayKeys();
             var reservations = LoadReservations();
             var reservation = reservations.FirstOrDefault(x => x.Key_Id == dayKey_Id);
             if(reservation == null)
             {
-                return;
+                return "Er is geen reservering met uw sleutel";
             }
             reservation.Attended = true;
             SaveData(reservations);
+            return "";
         }
 
         /// <summary>

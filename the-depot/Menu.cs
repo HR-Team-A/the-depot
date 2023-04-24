@@ -21,7 +21,7 @@ namespace the_depot
             // Loop through all available tours and add them as an option.
             foreach (var tour in TourService.LoadTours().FindAll(tour => tour.Started))
             {
-                AddOption(tour.Time, false);
+                AddOption(tour.Time, false, tour.Id);
             }
 
             optionsReservation.Add(new Option("Rondleiding annuleren", () => CancelReservation("Rondleiding is geannuleerd"), DateTime.MinValue));
@@ -61,8 +61,12 @@ namespace the_depot
                 case (Constants.Roles.Visitor):
                     if (tourStarted)
                     {
-                        ReservationService.SetReservationAttended(dayKey.Id);
-                        WriteTemporaryMessage("U ben successvol aangemeld");
+                        var error = ReservationService.SetReservationAttended(dayKey.Id, tour_Id);
+                        if (string.IsNullOrEmpty(error))
+                        {
+                            WriteMessageAndCodeScan("U ben successvol aangemeld, laat de volgende bezoeker hun code scannen", true, tour_Id);
+                        }
+                        WriteMessageAndCodeScan(error, true, tour_Id);
                     }
                     else
                     {
@@ -76,7 +80,7 @@ namespace the_depot
                     }
                     break;
                 case (Constants.Roles.Guide):
-                    WriteMessageAndCodeScan("Rondleiding gestart, laat de bezoekers hun code scannen:", true, );
+                    WriteMessageAndCodeScan("Rondleiding gestart, laat de bezoekers hun code scannen:", true, tour_Id);
                     break;
                 case (Constants.Roles.DepartmentHead):
                     WriteTemporaryMessage("Reservering is succesvol gemaakt");
@@ -165,15 +169,15 @@ namespace the_depot
             }
         }
 
-        static void AddOption(DateTime tourTime, bool isTabbed)
+        static void AddOption(DateTime tourTime, bool isTabbed, int tour_Id = 0)
         {
             if (isTabbed)
             {
-                optionsReservation.Add(new Option("  " + tourTime.ToString("H:mm"), () => WriteMessageAndCodeScan($"{tourTime.ToString("H:mm")} is geselecteerd"), DateTime.MinValue));
+                optionsReservation.Add(new Option("  " + tourTime.ToString("H:mm"), () => WriteMessageAndCodeScan($"{tourTime.ToString("H:mm")} is geselecteerd", false, tour_Id), DateTime.MinValue));
             }
             else
             {
-                optionsReservation.Add(new Option(tourTime.ToString("H:mm"), () => WriteMessageAndCodeScan($"{tourTime.ToString("H:mm")} is geselecteerd"), DateTime.MinValue));
+                optionsReservation.Add(new Option(tourTime.ToString("H:mm"), () => WriteMessageAndCodeScan($"{tourTime.ToString("H:mm")} is geselecteerd", false, tour_Id), DateTime.MinValue));
             }
         }
     }
