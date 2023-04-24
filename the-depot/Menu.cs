@@ -14,18 +14,7 @@ namespace the_depot
         {
             //load files
             DayKeyService.LoadDayKeys();
-
-            // Create options that you want your menu to have
-            optionsReservation = new List<Option>();
-
-            // Loop through all available tours and add them as an option.
-            foreach (var tour in TourService.LoadTours().FindAll(tour => tour.Started))
-            {
-                AddOption(tour.Time, false, tour.Id);
-            }
-
-            optionsReservation.Add(new Option("Rondleiding annuleren", () => CancelReservation("Rondleiding is geannuleerd"), DateTime.MinValue));
-
+            LoadReservationOptions();
             ChooseMenu(optionsReservation);
         }
         // Default action of all the options. You can create more methods
@@ -44,7 +33,11 @@ namespace the_depot
             Console.WriteLine(message);
             Console.WriteLine("Scan code:");
             var code = Console.ReadLine() ?? string.Empty;
-            
+            if (tourStarted && code == "stop")
+            {
+                LoadReservationOptions();
+                ChooseMenu(optionsReservation);
+            }
             DayKeyService.LoadDayKeys();
 
             var dayKey = DayKeyService.GetDayKey(code);
@@ -80,6 +73,7 @@ namespace the_depot
                     }
                     break;
                 case (Constants.Roles.Guide):
+                    TourService.StartTour(tour_Id);
                     WriteMessageAndCodeScan("Rondleiding gestart, laat de bezoekers hun code scannen:", true, tour_Id);
                     break;
                 case (Constants.Roles.DepartmentHead):
@@ -179,6 +173,21 @@ namespace the_depot
             {
                 optionsReservation.Add(new Option(tourTime.ToString("H:mm"), () => WriteMessageAndCodeScan($"{tourTime.ToString("H:mm")} is geselecteerd", false, tour_Id), DateTime.MinValue));
             }
+        }
+
+        static void LoadReservationOptions()
+        {
+            // Create options that you want your menu to have
+            optionsReservation = new List<Option>();
+
+            // Loop through all available tours and add them as an option.
+            foreach (var tour in TourService.LoadTours().FindAll(tour => !tour.Started))
+            {
+                AddOption(tour.Time, false, tour.Id);
+            }
+
+            optionsReservation.Add(new Option("Rondleiding annuleren", () => CancelReservation("Rondleiding is geannuleerd"), DateTime.MinValue));
+
         }
     }
     public class Option
