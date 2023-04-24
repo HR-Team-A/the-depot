@@ -65,7 +65,7 @@ namespace the_depot.Services
                 var tour = tours.FirstOrDefault(x => x.Id == reservation.Tour_Id);
 
                 // Check if not attended and tour has started. (If they haven't been to the tour they can reuse the key.)
-                if (reservation != null && tour != null && !reservation.Attended && tour.Started)
+                if (!reservation.Attended && tour.Started)
                 {
                     error = $"Deze code is al gebruikt op {daykey.UsedOnDate.ToString("dd-MM-yyyy HH:mm")} om een reservering te maken, annuleer eerst deze reservering om een andere reservering te kunnen plaatsen";
                     return false;
