@@ -12,7 +12,7 @@ namespace the_depot
 
         static void Main(string[] args)
         {
-            //load files
+            // Load files
             DayKeyService.LoadDayKeys();
             LoadReservationOptions();
             ChooseMenu(optionsReservation);
@@ -53,6 +53,7 @@ namespace the_depot
                 else
                 {
                     WriteMessageAndCodeScan("Uw code is niet gevonden", true, tour_Id);
+                    return;
                 }
             }
 
