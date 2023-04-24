@@ -41,7 +41,7 @@ namespace the_depot
             DayKeyService.LoadDayKeys();
 
             var dayKey = DayKeyService.GetDayKey(code);
-            
+
             // Code does not exist
             if (dayKey == null)
             {
@@ -55,7 +55,7 @@ namespace the_depot
                     WriteMessageAndCodeScan("Uw code is niet gevonden", true, tour_Id);
                 }
             }
-            
+
             switch (dayKey.Role)
             {
                 case (Constants.Roles.Visitor):
@@ -180,16 +180,9 @@ namespace the_depot
             }
         }
 
-        static void AddOption(DateTime tourTime, bool isTabbed, int tour_Id = 0)
+        static void AddOption(DateTime tourTime, int tour_Id = 0)
         {
-            if (isTabbed)
-            {
-                optionsReservation.Add(new Option("  " + tourTime.ToString("H:mm"), () => WriteMessageAndCodeScan($"{tourTime.ToString("H:mm")} is geselecteerd", false, tour_Id), DateTime.MinValue));
-            }
-            else
-            {
-                optionsReservation.Add(new Option(tourTime.ToString("H:mm"), () => WriteMessageAndCodeScan($"{tourTime.ToString("H:mm")} is geselecteerd", false, tour_Id), DateTime.MinValue));
-            }
+            optionsReservation.Add(new Option(tourTime.ToString("H:mm"), () => WriteMessageAndCodeScan($"{tourTime.ToString("H:mm")} is geselecteerd", false, tour_Id), DateTime.MinValue));
         }
 
         static void LoadReservationOptions()
@@ -200,7 +193,7 @@ namespace the_depot
             // Loop through all available tours and add them as an option.
             foreach (var tour in TourService.LoadTours().FindAll(tour => !tour.Started))
             {
-                AddOption(tour.Time, false, tour.Id);
+                AddOption(tour.Time, tour.Id);
             }
 
             optionsReservation.Add(new Option("Rondleiding annuleren", () => CancelReservation("Rondleiding is geannuleerd"), DateTime.MinValue));
