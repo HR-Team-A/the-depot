@@ -30,6 +30,11 @@ namespace the_depot.Services
             return DayKeys.FirstOrDefault(x => x.Key == key);
         }
 
+        public static List<DayKey> GetAllKeys()
+        {
+            return DayKeys;
+        }
+
         /// <summary>
         /// set a daykey used
         /// </summary>

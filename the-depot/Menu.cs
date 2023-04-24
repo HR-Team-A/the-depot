@@ -51,7 +51,7 @@ namespace the_depot
         }
 
         // scan the code and show the role
-        private static void WriteMessageAndCodeScan(string message)
+        private static void WriteMessageAndCodeScan(string message, bool tourStarted = false, int tour_Id = 0)
         {
             Console.Clear();
             Console.WriteLine(message);
@@ -79,16 +79,24 @@ namespace the_depot
             switch (dayKey.Role)
             {
                 case (Constants.Roles.Visitor):
-                    DayKeyService.SetDayKeyUsed(code, out string error);
-                    if(string.IsNullOrEmpty(error))
-                        WriteTemporaryMessage("Reservering is succesvol gemaakt");
+                    if (tourStarted)
+                    {
+                        ReservationService.SetReservationAttended(dayKey.Id);
+                        WriteTemporaryMessage("U ben successvol aangemeld");
+                    }
                     else
                     {
-                        WriteTemporaryMessage(error);
+                        DayKeyService.SetDayKeyUsed(code, out string error);
+                        if(string.IsNullOrEmpty(error))
+                            WriteTemporaryMessage("Reservering is succesvol gemaakt");
+                        else
+                        {
+                            WriteTemporaryMessage(error);
+                        }
                     }
                     break;
                 case (Constants.Roles.Guide):
-                    WriteTemporaryMessage("Todo: rondleiding starten");
+                    WriteMessageAndCodeScan("Rondleiding gestart, laat de bezoekers hun code scannen:", true, );
                     break;
                 case (Constants.Roles.DepartmentHead):
                     WriteTemporaryMessage("Reservering is succesvol gemaakt");

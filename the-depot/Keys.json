@@ -1,68 +1,57 @@
 [
   {
+    "Id":  1,
     "Key": "123456789876543234567887654345678",
-    "Used": false,
-    "UsedOnDate": "0001-01-01T00:00:00",
     "Role": 1
   },
   {
+    "Id": 2,
     "Key": "test",
-    "Used": false,
-    "UsedOnDate": "0001-01-01T00:00:00",
     "Role": 1
   },
   {
+    "Id": 3,
     "Key": "1",
-    "Used": true,
-    "UsedOnDate": "2023-03-27T19:23:19.1488818+02:00",
     "Role": 1
   },
   {
+    "Id": 4,
     "Key": "2",
-    "Used": false,
-    "UsedOnDate": "0001-01-01T00:00:00",
     "Role": 2
   },
   {
+    "Id": 5,
     "Key": "3",
-    "Used": false,
-    "UsedOnDate": "0001-01-01T00:00:00",
     "Role": 3
   },
   {
+    "Id": 6,
     "Key": "2",
-    "Used": false,
-    "UsedOnDate": "0001-01-01T00:00:00",
     "Role": 2
   },
   {
+    "Id": 7,
     "Key": "3",
-    "Used": false,
-    "UsedOnDate": "0001-01-01T00:00:00",
     "Role": 3
   },
   {
+    "Id": 8,
     "Key": "2",
-    "Used": false,
-    "UsedOnDate": "0001-01-01T00:00:00",
     "Role": 2
   },
   {
+    "Id": 9,
     "Key": "3",
-    "Used": false,
-    "UsedOnDate": "0001-01-01T00:00:00",
     "Role": 3
   },
   {
+    "Id": 10,
     "Key": "2",
-    "Used": false,
-    "UsedOnDate": "0001-01-01T00:00:00",
     "Role": 2
   },
   {
+    "Id": 11,
     "Key": "3",
-    "Used": false,
-    "UsedOnDate": "0001-01-01T00:00:00",
     "Role": 3
   }
 ]
