@@ -1,120 +1,116 @@
-﻿[
+[
   {
-    "Time": "11:00",
+    "Id": 1,
+    "Time": "2023-03-27T11:00:00+02:00",
     "MaxAttendees": 13,
-    "Enabled": false,
-    "Attendees": [
-         "123456789876543234567887654345678",
-         "w4756432567545325465756",
-         "543675634564568463"
-    ]
+    "Started": true
   },
   {
-    "Time": "11:20",
+    "Id": 2,
+    "Time": "2023-03-27T11:20:00+02:00",
     "MaxAttendees": 13,
-    "Enabled": false,
-    "Attendees": []
+    "Started": true
   },
   {
-    "Time": "11:40",
+    "Id": 3,
+    "Time": "2023-03-27T11:40:00+02:00",
     "MaxAttendees": 13,
-    "Enabled": false,
-    "Attendees": []
+    "Started": false
   },
   {
-    "Time": "12:00",
+    "Id": 4,
+    "Time": "2023-03-27T12:00:00+02:00",
     "MaxAttendees": 13,
-    "Enabled": false,
-    "Attendees": []
+    "Started": false
   },
   {
-    "Time": "12:20",
+    "Id": 5,
+    "Time": "2023-03-27T12:20:00+02:00",
     "MaxAttendees": 13,
-    "Enabled": false,
-    "Attendees": []
+    "Started": false
   },
   {
-    "Time": "12:40",
+    "Id": 6,
+    "Time": "2023-03-27T12:40:00+02:00",
     "MaxAttendees": 13,
-    "Enabled": false,
-    "Attendees": []
+    "Started": false
   },
   {
-    "Time": "13:00",
+    "Id": 7,
+    "Time": "2023-03-27T13:00:00+02:00",
     "MaxAttendees": 13,
-    "Enabled": false,
-    "Attendees": []
+    "Started": false
   },
   {
-    "Time": "13:20",
+    "Id": 8,
+    "Time": "2023-03-27T13:20:00+02:00",
     "MaxAttendees": 13,
-    "Enabled": false,
-    "Attendees": []
+    "Started": false
   },
   {
-    "Time": "13:40",
+    "Id": 9,
+    "Time": "2023-03-27T13:40:00+02:00",
     "MaxAttendees": 13,
-    "Enabled": false,
-    "Attendees": []
+    "Started": false
   },
   {
-    "Time": "14:00",
+    "Id": 10,
+    "Time": "2023-03-27T14:00:00+02:00",
     "MaxAttendees": 13,
-    "Enabled": false,
-    "Attendees": []
+    "Started": false
   },
   {
-    "Time": "14:20",
+    "Id": 11,
+    "Time": "2023-03-27T14:20:00+02:00",
     "MaxAttendees": 13,
-    "Enabled": false,
-    "Attendees": []
+    "Started": false
   },
   {
-    "Time": "14:40",
+    "Id": 12,
+    "Time": "2023-03-27T14:40:00+02:00",
     "MaxAttendees": 13,
-    "Enabled": false,
-    "Attendees": []
+    "Started": false
   },
   {
-    "Time": "15:00",
+    "Id": 13,
+    "Time": "2023-03-27T15:00:00+02:00",
     "MaxAttendees": 13,
-    "Enabled": false,
-    "Attendees": []
+    "Started": false
   },
   {
-    "Time": "15:20",
+    "Id": 14,
+    "Time": "2023-03-27T15:20:00+02:00",
     "MaxAttendees": 13,
-    "Enabled": false,
-    "Attendees": []
+    "Started": false
   },
   {
-    "Time": "15:40",
+    "Id": 15,
+    "Time": "2023-03-27T15:40:00+02:00",
     "MaxAttendees": 13,
-    "Enabled": false,
-    "Attendees": []
+    "Started": false
   },
   {
-    "Time": "16:00",
+    "Id": 16,
+    "Time": "2023-03-27T16:00:00+02:00",
     "MaxAttendees": 13,
-    "Enabled": false,
-    "Attendees": []
+    "Started": false
   },
   {
-    "Time": "16:20",
+    "Id": 17,
+    "Time": "2023-03-27T16:20:00+02:00",
     "MaxAttendees": 13,
-    "Enabled": false,
-    "Attendees": []
+    "Started": false
   },
   {
-    "Time": "16:40",
+    "Id": 18,
+    "Time": "2023-03-27T16:40:00+02:00",
     "MaxAttendees": 13,
-    "Enabled": false,
-    "Attendees": []
+    "Started": false
   },
   {
-    "Time": "17:00",
+    "Id": 19,
+    "Time": "2023-03-27T17:00:00+02:00",
     "MaxAttendees": 13,
-    "Enabled": false,
-    "Attendees": []
+    "Started": false
   }
 ]

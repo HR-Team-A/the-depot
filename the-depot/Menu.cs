@@ -15,32 +15,7 @@ namespace the_depot
         {
             //load files
             DayKeyService.LoadDayKeys();
-
-            // Create options that you want your menu to have
-            DateTime tourTime = DateTime.Parse("11:00:00 AM");
-
-            optionsReservation = new List<Option>();
-            for (int i = 0; i < 7; i++)
-            {
-                if (i < 6)
-                {
-                    AddOption(tourTime, false);
-                    for (int j = 0; j < 2; j++)
-                    {
-                        tourTime = tourTime.AddMinutes(20);
-                        AddOption(tourTime, true);
-                    }
-                }
-                if (i >= 6)
-                {
-                    AddOption(tourTime, false);
-                }
-                tourTime = tourTime.AddMinutes(20);
-            };
-
-            optionsReservation.Add(new Option("Rondleiding annuleren", () => CancelReservation("Rondleiding is geannuleerd"), DateTime.MinValue));
-            optionsReservation.Add(new Option("Admin scherm", () => WriteMessageAndCodeScan("", true), DateTime.MinValue));
-
+            LoadReservationOptions();
             ChooseMenu(optionsReservation);
         }
         // Default action of all the options. You can create more methods
@@ -53,7 +28,7 @@ namespace the_depot
         }
 
         // scan the code and show the role
-        private static void WriteMessageAndCodeScan(string message, bool admin)
+        private static void WriteMessageAndCodeScan(string message, bool tourStarted = false, int tour_Id = 0, bool admin = false)
         {
             Console.Clear();
             if (!admin)
@@ -62,16 +37,27 @@ namespace the_depot
             }
             Console.WriteLine("Scan code:");
             var code = Console.ReadLine() ?? string.Empty;
-            
+            if (tourStarted && code == "stop")
+            {
+                LoadReservationOptions();
+                ChooseMenu(optionsReservation);
+            }
             DayKeyService.LoadDayKeys();
 
             var dayKey = DayKeyService.GetDayKey(code);
-            
+
             // Code does not exist
             if (dayKey == null)
             {
-                WriteTemporaryMessage("Code bestaat niet");
-                return;
+                if (!tourStarted)
+                {
+                    WriteTemporaryMessage("Code bestaat niet");
+                    return;
+                }
+                else
+                {
+                    WriteMessageAndCodeScan("Uw code is niet gevonden", true, tour_Id);
+                }
             }
 
             if (!admin)
@@ -79,23 +65,37 @@ namespace the_depot
                 switch (dayKey.Role)
                 {
                     case (Constants.Roles.Visitor):
-                        DayKeyService.SetDayKeyUsed(code, out string error);
-                        if (string.IsNullOrEmpty(error))
-                            WriteTemporaryMessage("Reservering is succesvol gemaakt");
+                        if (tourStarted)
+                        {
+                            var error = ReservationService.SetReservationAttended(dayKey.Id, tour_Id);
+                            if (string.IsNullOrEmpty(error))
+                            {
+                                WriteMessageAndCodeScan("U ben successvol aangemeld, laat de volgende bezoeker hun code scannen", true, tour_Id);
+                            }
+                            WriteMessageAndCodeScan(error, true, tour_Id);
+                        }
                         else
                         {
-                            WriteTemporaryMessage(error);
+                            var error = ReservationService.AddReservation(dayKey.Id, tour_Id);
+                            if (string.IsNullOrEmpty(error))
+                                WriteTemporaryMessage("Reservering is succesvol gemaakt");
+                            else
+                            {
+                                WriteTemporaryMessage(error);
+                            }
+                            break;
+                            case (Constants.Roles.Guide):
+                                TourService.StartTour(tour_Id);
+                                WriteMessageAndCodeScan("Rondleiding gestart, laat de bezoekers hun code scannen:", true, tour_Id);
+                                break;
+                            case (Constants.Roles.DepartmentHead):
+                                if (!tourStarted)
+                                    WriteTemporaryMessage("DepartmentHead");
+                                break;
+                            default:
+                                WriteTemporaryMessage("Code is niet geldig");
+                                break;
                         }
-                        break;
-                    case (Constants.Roles.Guide):
-                        WriteTemporaryMessage("Todo: rondleiding starten");
-                        break;
-                    case (Constants.Roles.DepartmentHead):
-                        WriteTemporaryMessage("Reservering is succesvol gemaakt");
-                        break;
-                    default:
-                        WriteTemporaryMessage("Code is niet geldig");
-                        break;
                 }
             }
             else
@@ -120,7 +120,16 @@ namespace the_depot
             var code = Console.ReadLine() ?? string.Empty;
             if (CodeValidationService.GetRole(code) == Constants.Roles.Visitor)
             {
-                DayKeyService.CancelReservation(code);
+                var id = DayKeyService.GetDayKey(code)?.Id;
+                if (id != null)
+                {
+                    ReservationService.CancelReservation((int)id, out string error);
+                    if (!string.IsNullOrEmpty(error))
+                    {
+                        WriteTemporaryMessage(error);
+                    }
+                }
+
                 WriteTemporaryMessage(message);
             }
             else
@@ -224,16 +233,24 @@ namespace the_depot
             }
         }
 
-        static void AddOption(DateTime tourTime, bool isTabbed)
+        static void AddOption(DateTime tourTime, int tour_Id = 0)
         {
-            if (isTabbed)
+            optionsReservation.Add(new Option(tourTime.ToString("H:mm"), () => WriteMessageAndCodeScan($"{tourTime.ToString("H:mm")} is geselecteerd", false, tour_Id), DateTime.MinValue));
+        }
+
+        static void LoadReservationOptions()
+        {
+            // Create options that you want your menu to have
+            optionsReservation = new List<Option>();
+
+            // Loop through all available tours and add them as an option.
+            foreach (var tour in TourService.LoadTours().FindAll(tour => !tour.Started))
             {
-                optionsReservation.Add(new Option("  " + tourTime.ToString("H:mm"), () => WriteMessageAndCodeScan($"{tourTime.ToString("H:mm")} is geselecteerd", false), DateTime.MinValue));
+                AddOption(tour.Time, tour.Id);
             }
-            else
-            {
-                optionsReservation.Add(new Option(tourTime.ToString("H:mm"), () => WriteMessageAndCodeScan($"{tourTime.ToString("H:mm")} is geselecteerd", false), DateTime.MinValue));
-            }
+
+            optionsReservation.Add(new Option("Rondleiding annuleren", () => CancelReservation("Rondleiding is geannuleerd"), DateTime.MinValue));
+            optionsReservation.Add(new Option("Admin scherm", () => WriteMessageAndCodeScan("", false, tour_Id, true), DateTime.MinValue));
         }
     }
     public class Option
