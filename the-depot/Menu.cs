@@ -103,7 +103,14 @@ namespace the_depot
             {
                 var id = DayKeyService.GetDayKey(code)?.Id;
                 if (id != null)
-                    ReservationService.CancelReservation((int)id);
+                {
+                    ReservationService.CancelReservation((int)id, out string error);
+                    if (!string.IsNullOrEmpty(error))
+                    {
+                        WriteTemporaryMessage(error);
+                    }
+                }
+
                 WriteTemporaryMessage(message);
             }
             else

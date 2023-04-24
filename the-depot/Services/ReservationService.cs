@@ -43,12 +43,18 @@ namespace the_depot.Services
             return string.Empty;
         }
 
-        public static void CancelReservation(int dayKey_Id)
+        public static void CancelReservation(int dayKey_Id, out string error)
         {
+            error = string.Empty;
             var reservations = LoadReservations();
-            var reservation = reservations.FirstOrDefault(x => x.Key_Id == dayKey_Id);
-            if(reservation != null) 
-                reservations.Remove(reservation);
+            var reservation = reservations.FirstOrDefault(x => x.Key_Id == dayKey_Id );
+            if(reservation != null)
+            {
+                if (!reservation.Attended)
+                    reservations.Remove(reservation);
+                else
+                    error = "Je hebt al deelgenomen aan een rondleiding je kan die niet annuleren."; 
+            }
             SaveData(reservations);
         }
 
