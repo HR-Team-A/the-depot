@@ -1,6 +1,4 @@
 ﻿using System.Text.Json;
-using System.Xml;
-using System.Xml.Linq;
 using the_depot.Models;
 
 namespace the_depot.Services
