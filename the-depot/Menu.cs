@@ -44,18 +44,18 @@ namespace the_depot
             Console.WriteLine(message);
             Console.WriteLine("Scan code:");
             var code = Console.ReadLine() ?? string.Empty;
-            
+
             DayKeyService.LoadDayKeys();
 
             var dayKey = DayKeyService.GetDayKey(code);
-            
+
             // Code does not exist
             if (dayKey == null)
             {
                 WriteTemporaryMessage("Code bestaat niet");
                 return;
             }
-            
+
             switch (dayKey.Role)
             {
                 case (Constants.Roles.Visitor):
@@ -70,8 +70,8 @@ namespace the_depot
                     }
                     else
                     {
-                        DayKeyService.SetDayKeyUsed(code, out string error);
-                        if(string.IsNullOrEmpty(error))
+                        var error = ReservationService.AddReservation(dayKey.Id, tour_Id);
+                        if (string.IsNullOrEmpty(error))
                             WriteTemporaryMessage("Reservering is succesvol gemaakt");
                         else
                         {
@@ -99,7 +99,9 @@ namespace the_depot
             var code = Console.ReadLine() ?? string.Empty;
             if (CodeValidationService.GetRole(code) == Constants.Roles.Visitor)
             {
-                DayKeyService.CancelReservation(code);
+                var id = DayKeyService.GetDayKey(code)?.Id;
+                if (id != null)
+                    ReservationService.CancelReservation((int)id);
                 WriteTemporaryMessage(message);
             }
             else
