@@ -1,6 +1,8 @@
 using ConsoleApp;
 using the_depot.Models;
 using the_depot.Services;
+using System.Media;
+using System.Security.Cryptography.X509Certificates;
 
 namespace the_depot
 {
@@ -9,6 +11,7 @@ namespace the_depot
         public static List<Option> options = new List<Option>();
         public static List<Option> optionsReservation = new List<Option>();
         public static List<Option> optionsMinutes = new List<Option>();
+        public static List<Option> adminOptions = new List<Option>();
 
         static void Main(string[] args)
         {
@@ -38,6 +41,7 @@ namespace the_depot
             };
 
             optionsReservation.Add(new Option("Rondleiding annuleren", () => CancelReservation("Rondleiding is geannuleerd"), DateTime.MinValue));
+            optionsReservation.Add(new Option("Admin scherm", () => WriteMessageAndCodeScan("", true), DateTime.MinValue));
 
             ChooseMenu(optionsReservation);
         }
@@ -51,10 +55,13 @@ namespace the_depot
         }
 
         // scan the code and show the role
-        private static void WriteMessageAndCodeScan(string message)
+        private static void WriteMessageAndCodeScan(string message, bool admin)
         {
             Console.Clear();
-            Console.WriteLine(message);
+            if (!admin)
+            {
+                Console.WriteLine(message);
+            }
             Console.WriteLine("Scan code:");
             var code = Console.ReadLine() ?? string.Empty;
             
@@ -68,27 +75,42 @@ namespace the_depot
                 WriteTemporaryMessage("Code bestaat niet");
                 return;
             }
-            
-            switch (dayKey.Role)
+
+            if (!admin)
             {
-                case (Constants.Roles.Visitor):
-                    DayKeyService.SetDayKeyUsed(code, out string error);
-                    if(string.IsNullOrEmpty(error))
+                switch (dayKey.Role)
+                {
+                    case (Constants.Roles.Visitor):
+                        DayKeyService.SetDayKeyUsed(code, out string error);
+                        if (string.IsNullOrEmpty(error))
+                            WriteTemporaryMessage("Reservering is succesvol gemaakt");
+                        else
+                        {
+                            WriteTemporaryMessage(error);
+                        }
+                        break;
+                    case (Constants.Roles.Guide):
+                        WriteTemporaryMessage("Todo: rondleiding starten");
+                        break;
+                    case (Constants.Roles.DepartmentHead):
                         WriteTemporaryMessage("Reservering is succesvol gemaakt");
-                    else
-                    {
-                        WriteTemporaryMessage(error);
-                    }
-                    break;
-                case (Constants.Roles.Guide):
-                    WriteTemporaryMessage("Todo: rondleiding starten");
-                    break;
-                case (Constants.Roles.DepartmentHead):
-                    WriteTemporaryMessage("Reservering is succesvol gemaakt");
-                    break;
-                default:
-                    WriteTemporaryMessage("Code is niet geldig");
-                    break;
+                        break;
+                    default:
+                        WriteTemporaryMessage("Code is niet geldig");
+                        break;
+                }
+            }
+            else
+            {
+                switch (dayKey.Role)
+                {
+                    case (Constants.Roles.DepartmentHead):
+                        ShowAdminData();
+                        break;
+                    default:
+                        WriteTemporaryMessage("Code is niet geldig");
+                        break;
+                }
             }
         }
 
@@ -105,6 +127,40 @@ namespace the_depot
             }
             else
                 WriteTemporaryMessage("Code is niet geldig");
+        }
+
+        static void ShowAdminData()
+        {
+            Console.Clear();
+            adminOptions = new List<Option>();
+            adminOptions.Add(new Option("Dag overzicht", () => ChooseDate(), DateTime.MinValue));
+            adminOptions.Add(new Option("Week overzicht", () => ChooseDate(), DateTime.MinValue));
+            adminOptions.Add(new Option("Maand overzicht", () => ChooseDate(), DateTime.MinValue));
+
+            ChooseMenu(adminOptions);
+        }
+
+        static void ChooseDate()
+        {
+            Console.Clear();
+            Console.WriteLine("Vul een datum in (dd/mm/yyyy):");
+
+            DateTime date;
+            string[] formats = { "dd/MM/yyyy", "dd/M/yyyy", "d/M/yyyy", "d/MM/yyyy",
+                "dd/MM/yy", "dd/M/yy", "d/M/yy", "d/MM/yy", "yyyy/MM/dd", "yyyy/M/dd", "yyyy/MM/d", "yyyy/M/d"};
+
+            while (!DateTime.TryParseExact(Console.ReadLine(), formats,
+                 System.Globalization.CultureInfo.InvariantCulture,
+                 System.Globalization.DateTimeStyles.None,
+                 out date))
+            {
+                Console.Clear();
+                Console.WriteLine("Vul een datum in:");
+                Console.WriteLine("Verkeerde input. Probeer opnieuw.");
+            }
+            Console.Clear();
+            Console.WriteLine("Datum geselecteerd: " + date);
+            Console.WriteLine("TODO: Add data");
         }
 
         static void ChooseMenu(List<Option> options)
@@ -174,11 +230,11 @@ namespace the_depot
         {
             if (isTabbed)
             {
-                optionsReservation.Add(new Option("  " + tourTime.ToString("H:mm"), () => WriteMessageAndCodeScan($"{tourTime.ToString("H:mm")} is geselecteerd"), DateTime.MinValue));
+                optionsReservation.Add(new Option("  " + tourTime.ToString("H:mm"), () => WriteMessageAndCodeScan($"{tourTime.ToString("H:mm")} is geselecteerd", false), DateTime.MinValue));
             }
             else
             {
-                optionsReservation.Add(new Option(tourTime.ToString("H:mm"), () => WriteMessageAndCodeScan($"{tourTime.ToString("H:mm")} is geselecteerd"), DateTime.MinValue));
+                optionsReservation.Add(new Option(tourTime.ToString("H:mm"), () => WriteMessageAndCodeScan($"{tourTime.ToString("H:mm")} is geselecteerd", false), DateTime.MinValue));
             }
         }
     }
