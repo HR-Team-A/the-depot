@@ -51,8 +51,16 @@ namespace the_depot.Services
             }
             if (daykey.Used)
             {
-                error = $"Deze code is al gebruikt op {daykey.UsedOnDate.ToString("dd-MM-yyyy HH:mm")} om een reservering te maken, annuleer eerst deze reservering om een andere reservering te kunnen plaatsen";
-                return false;
+                var reservations = ReservationService.LoadReservations();
+                var reservation = reservations.FirstOrDefault(x => x.Key_Id == daykey.Id);
+                var tour = TourService.LoadTours().FirstOrDefault(x => x.Id == reservation.Tour_Id);
+                
+                // Check if not attended and tour has not started. (If they haven't been to the tour they can reuse the key.)
+                if (reservation != null && tour != null && !reservation.Attended && tour.Started)
+                {
+                    error = $"Deze code is al gebruikt op {daykey.UsedOnDate.ToString("dd-MM-yyyy HH:mm")} om een reservering te maken, annuleer eerst deze reservering om een andere reservering te kunnen plaatsen";
+                    return false;
+                }
             }
             daykey.Used = true;
             daykey.UsedOnDate = DateTime.Now;
