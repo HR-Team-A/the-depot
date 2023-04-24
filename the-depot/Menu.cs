@@ -16,26 +16,13 @@ namespace the_depot
             DayKeyService.LoadDayKeys();
 
             // Create options that you want your menu to have
-            DateTime tourTime = DateTime.Parse("11:00:00 AM");
-
             optionsReservation = new List<Option>();
-            for (int i = 0; i < 7; i++)
+
+            // Loop through all available tours and add them as an option.
+            foreach (var tour in TourService.LoadTours().FindAll(tour => tour.Started))
             {
-                if (i < 6)
-                {
-                    AddOption(tourTime, false);
-                    for (int j = 0; j < 2; j++)
-                    {
-                        tourTime = tourTime.AddMinutes(20);
-                        AddOption(tourTime, true);
-                    }
-                }
-                if (i >= 6)
-                {
-                    AddOption(tourTime, false);
-                }
-                tourTime = tourTime.AddMinutes(20);
-            };
+                AddOption(tour.Time, false);
+            }
 
             optionsReservation.Add(new Option("Rondleiding annuleren", () => CancelReservation("Rondleiding is geannuleerd"), DateTime.MinValue));
 
@@ -66,13 +53,6 @@ namespace the_depot
             if (dayKey == null)
             {
                 WriteTemporaryMessage("Code bestaat niet");
-                return;
-            }
-            
-            var isValid = CodeValidationService.Validate(dayKey);
-            if (!isValid)
-            {
-                WriteTemporaryMessage("Code is niet geldig");
                 return;
             }
             

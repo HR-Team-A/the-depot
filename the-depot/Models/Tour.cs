@@ -1,15 +1,11 @@
 ﻿using System;
 namespace the_depot.Models
 {
-	public class Tour
-	{
+	public class Tour{
         public int Id { get; set; }
-
-        public DateTime Start { get; }
-
-        public int MaxAttendees { get; }
-
-        public bool Started { get; }
+        public DateTime Time { get; set; }
+        public int MaxAttendees { get; set; }
+        public bool Started { get; set; }
     }
 }
 
