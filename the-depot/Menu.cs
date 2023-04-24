@@ -45,8 +45,15 @@ namespace the_depot
             // Code does not exist
             if (dayKey == null)
             {
-                WriteTemporaryMessage("Code bestaat niet");
-                return;
+                if (!tourStarted)
+                {
+                    WriteTemporaryMessage("Code bestaat niet");
+                    return;
+                }
+                else
+                {
+                    WriteMessageAndCodeScan("Uw code is niet gevonden", true, tour_Id);
+                }
             }
             
             switch (dayKey.Role)
