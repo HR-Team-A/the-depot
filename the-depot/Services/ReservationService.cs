@@ -21,10 +21,10 @@ namespace the_depot.Services
         public static string SetReservationAttended(int dayKey_Id, int tour_Id)
         {
             var reservations = LoadReservations();
-            var reservation = reservations.FirstOrDefault(x => x.Key_Id == dayKey_Id);
+            var reservation = reservations.FirstOrDefault(x => x.Key_Id == dayKey_Id && x.Tour_Id == tour_Id);
             if(reservation == null)
             {
-                return "Er is geen reservering met uw sleutel";
+                return "Er is geen reservering gevonden met uw sleutel";
             }
             reservation.Attended = true;
             SaveData(reservations);

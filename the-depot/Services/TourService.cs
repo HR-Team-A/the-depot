@@ -15,5 +15,26 @@ namespace the_depot.Services
             List<Tour> tours = JsonSerializer.Deserialize<List<Tour>>(json) ?? new List<Tour>();
             return tours;
         }
+
+        public static void StartTour(int tour_Id)
+        {
+            var tours = LoadTours();
+            var tour = tours.FirstOrDefault(x => x.Id == tour_Id);
+            if (tour == null)
+            {
+                return;
+            }
+            tour.Started = true;
+            SaveData(tours);
+        }
+
+        /// <summary>
+        /// data data to file
+        /// </summary>
+        private static void SaveData(List<Tour> tours)
+        {
+            string json = JsonSerializer.Serialize(tours, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(Path, json);
+        }
     }
 }
