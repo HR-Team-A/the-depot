@@ -1,10 +1,9 @@
 ﻿using System;
-using the_depot.Constants;
-
 namespace the_depot.Models
 {
-    public class Tour
-	{
+	public class Tour
+    {
+        public int Id { get; set; }
         public DateTime Time { get; set; }
         public int MaxAttendees { get; set; }
         public bool Started { get; set; }
