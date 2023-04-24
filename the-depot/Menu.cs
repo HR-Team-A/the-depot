@@ -56,13 +56,6 @@ namespace the_depot
                 return;
             }
             
-            var isValid = CodeValidationService.Validate(dayKey);
-            if (!isValid)
-            {
-                WriteTemporaryMessage("Code is niet geldig");
-                return;
-            }
-            
             switch (dayKey.Role)
             {
                 case (Constants.Roles.Visitor):
