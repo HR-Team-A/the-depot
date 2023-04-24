@@ -44,6 +44,10 @@ namespace the_depot
             Console.WriteLine(message);
             Console.WriteLine("Scan code:");
             var code = Console.ReadLine() ?? string.Empty;
+            if (tourStarted && code == "stop")
+            {
+                WriteTemporaryMessage("Rondleiding is gestart.");
+            }
 
             DayKeyService.LoadDayKeys();
 
@@ -80,10 +84,12 @@ namespace the_depot
                     }
                     break;
                 case (Constants.Roles.Guide):
-                    WriteMessageAndCodeScan("Rondleiding gestart, laat de bezoekers hun code scannen:", true, tour_Id);
+                    if (!tourStarted)
+                        WriteMessageAndCodeScan("Rondleiding gestart, laat de bezoekers hun code scannen:", true, tour_Id);
                     break;
                 case (Constants.Roles.DepartmentHead):
-                    WriteTemporaryMessage("Reservering is succesvol gemaakt");
+                    if (!tourStarted)
+                        WriteTemporaryMessage("DepartmentHead");
                     break;
                 default:
                     WriteTemporaryMessage("Code is niet geldig");

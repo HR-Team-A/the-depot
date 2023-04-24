@@ -34,10 +34,10 @@ namespace the_depot.Services
         public static string AddReservation(int dayKey_Id, int tour_Id)
         {
             var reservations = LoadReservations();
+            if(reservations.Any(x => x.Key_Id == dayKey_Id && x.Attended))
+                return "Reservering mislukt, je hebt vandaag al deelgenomen aan een rondleiding. ";
             if(reservations.Any(x => x.Key_Id == dayKey_Id))
-            {
                 return "Er is al een reservering gemaakt, annuleer deze eerst om een nieuwe aan te maken.";
-            }
             reservations.Add(new Reservation { Attended = false, Key_Id = dayKey_Id, Tour_Id = tour_Id }) ;
             SaveData(reservations);
             return string.Empty;
