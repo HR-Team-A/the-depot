@@ -245,12 +245,12 @@ namespace the_depot
         {
             // Create options that you want your menu to have
             optionsReservation = new List<Option>();
-            string dt = DateTime.Now.ToShortTimeString();
+            string dateTimeNowStr = DateTime.Now.ToShortTimeString();
             // Loop through all available tours and add them as an option.
             foreach (var tour in TourService.LoadTours().FindAll(tour => !tour.Started))
             {
                 string tourTime = tour.Time.ToShortTimeString();
-                if (DateTime.Parse(dt) < DateTime.Parse(tourTime))
+                if (DateTime.Parse(dateTimeNowStr) < DateTime.Parse(tourTime))
                 {
                     AddOption(tour.Time, tour.Id);
                 }
