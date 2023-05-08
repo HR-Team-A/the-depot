@@ -243,11 +243,15 @@ namespace the_depot
         {
             // Create options that you want your menu to have
             optionsReservation = new List<Option>();
-
+            string dt = DateTime.Now.ToShortTimeString();
             // Loop through all available tours and add them as an option.
             foreach (var tour in TourService.LoadTours().FindAll(tour => !tour.Started))
             {
-                AddOption(tour.Time, tour.Id);
+                string tourTime = tour.Time.ToShortTimeString();
+                if (DateTime.Parse(dt) < DateTime.Parse(tourTime))
+                {
+                    AddOption(tour.Time, tour.Id);
+                }
             }
 
             optionsReservation.Add(new Option("Rondleiding annuleren", () => CancelReservation("Rondleiding is geannuleerd"), DateTime.MinValue));
