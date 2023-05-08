@@ -24,6 +24,9 @@ namespace the_depot
             Console.Clear();
             Console.WriteLine(message);
             Thread.Sleep(5000);
+            
+            // Reload menu to update attendees and go back to the tour menu
+            LoadReservationOptions();
             ChooseMenu(optionsReservation);
         }
 
