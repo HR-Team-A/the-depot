@@ -59,56 +59,58 @@ namespace the_depot
                     WriteMessageAndCodeScan("Uw code is niet gevonden", true, tour_Id);
                 }
             }
-
-            if (!admin)
-            {
-                switch (dayKey.Role)
-                {
-                    case (Constants.Roles.Visitor):
-                        if (tourStarted)
-                        {
-                            var error = ReservationService.SetReservationAttended(dayKey.Id, tour_Id);
-                            if (string.IsNullOrEmpty(error))
-                            {
-                                WriteMessageAndCodeScan("U ben successvol aangemeld, laat de volgende bezoeker hun code scannen", true, tour_Id);
-                            }
-                            WriteMessageAndCodeScan(error, true, tour_Id);
-                        }
-                        else
-                        {
-                            var error = ReservationService.AddReservation(dayKey.Id, tour_Id);
-                            if (string.IsNullOrEmpty(error))
-                                WriteTemporaryMessage("Reservering is succesvol gemaakt");
-                            else
-                            {
-                                WriteTemporaryMessage(error);
-                            }
-                        }
-                        break;
-                    case (Constants.Roles.Guide):
-                        TourService.StartTour(tour_Id);
-                        WriteMessageAndCodeScan("Rondleiding gestart, laat de bezoekers hun code scannen:", true, tour_Id);
-                        break;
-                    case (Constants.Roles.DepartmentHead):
-                        if (!tourStarted)
-                            WriteTemporaryMessage("DepartmentHead");
-                        break;
-                    default:
-                        WriteTemporaryMessage("Code is niet geldig");
-                        break;
-
-                }
-            }
             else
             {
-                switch (dayKey.Role)
+                if (!admin)
                 {
-                    case (Constants.Roles.DepartmentHead):
-                        ShowAdminData();
-                        break;
-                    default:
-                        WriteTemporaryMessage("Code is niet geldig");
-                        break;
+                    switch (dayKey.Role)
+                    {
+                        case (Constants.Roles.Visitor):
+                            if (tourStarted)
+                            {
+                                var error = ReservationService.SetReservationAttended(dayKey.Id, tour_Id);
+                                if (string.IsNullOrEmpty(error))
+                                {
+                                    WriteMessageAndCodeScan("U ben successvol aangemeld, laat de volgende bezoeker hun code scannen", true, tour_Id);
+                                }
+                                WriteMessageAndCodeScan(error, true, tour_Id);
+                            }
+                            else
+                            {
+                                var error = ReservationService.AddReservation(dayKey.Id, tour_Id);
+                                if (string.IsNullOrEmpty(error))
+                                    WriteTemporaryMessage("Reservering is succesvol gemaakt");
+                                else
+                                {
+                                    WriteTemporaryMessage(error);
+                                }
+                            }
+                            break;
+                        case (Constants.Roles.Guide):
+                            TourService.StartTour(tour_Id);
+                            WriteMessageAndCodeScan("Rondleiding gestart, laat de bezoekers hun code scannen:", true, tour_Id);
+                            break;
+                        case (Constants.Roles.DepartmentHead):
+                            if (!tourStarted)
+                                WriteTemporaryMessage("DepartmentHead");
+                            break;
+                        default:
+                            WriteTemporaryMessage("Code is niet geldig");
+                            break;
+
+                    }
+                }
+                else
+                {
+                    switch (dayKey.Role)
+                    {
+                        case (Constants.Roles.DepartmentHead):
+                            ShowAdminData();
+                            break;
+                        default:
+                            WriteTemporaryMessage("Code is niet geldig");
+                            break;
+                    }
                 }
             }
         }
@@ -243,11 +245,15 @@ namespace the_depot
         {
             // Create options that you want your menu to have
             optionsReservation = new List<Option>();
-
+            string dateTimeNowStr = DateTime.Now.ToShortTimeString();
             // Loop through all available tours and add them as an option.
             foreach (var tour in TourService.LoadTours().FindAll(tour => !tour.Started))
             {
-                AddOption(tour.Time, tour.Id);
+                string tourTime = tour.Time.ToShortTimeString();
+                if (DateTime.Parse(dateTimeNowStr) < DateTime.Parse(tourTime))
+                {
+                    AddOption(tour.Time, tour.Id);
+                }
             }
 
             optionsReservation.Add(new Option("Rondleiding annuleren", () => CancelReservation("Rondleiding is geannuleerd"), DateTime.MinValue));
