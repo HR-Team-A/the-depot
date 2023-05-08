@@ -20,10 +20,10 @@ namespace the_depot.Services
             // Count attendees and add count to Tour object
             foreach (var tour in tours)
             {
-                var tourReservations = reservations.Where(r => r.Tour_Id == tour.Id && r.Attended).ToList();
+                var tourReservations = reservations.Where(r => r.Tour_Id == tour.Id).ToList();
                 tour.Attendees = tourReservations.Count;
             }
-            
+
             return tours;
         }
 
