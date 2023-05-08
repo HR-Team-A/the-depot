@@ -15,8 +15,7 @@ namespace the_depot.Services
             List<Tour> tours = JsonSerializer.Deserialize<List<Tour>>(json) ?? new List<Tour>();
 
             // Load reservation data
-            var reservationsJson = File.ReadAllText(ReservationService.Path);
-            List<Reservation> reservations = JsonSerializer.Deserialize<List<Reservation>>(reservationsJson) ?? new List<Reservation>();
+            var reservations = ReservationService.LoadReservations();
 
             // Count attendees and add count to Tour object
             foreach (var tour in tours)
@@ -24,7 +23,7 @@ namespace the_depot.Services
                 var tourReservations = reservations.Where(r => r.Tour_Id == tour.Id && r.Attended).ToList();
                 tour.Attendees = tourReservations.Count;
             }
-
+            
             return tours;
         }
 
