@@ -220,11 +220,13 @@ namespace the_depot
         static void WriteMenu(List<Option> options, Option selectedOption)
         {
             Console.Clear();
-
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("Gebruik de pijltjestoetsen om door het menu bewegen.");
             foreach (Option option in options)
             {
                 if (option == selectedOption)
                 {
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.Write("> ");
                 }
                 else
@@ -233,6 +235,7 @@ namespace the_depot
                 }
 
                 Console.WriteLine(option.Name);
+                Console.ForegroundColor = ConsoleColor.White;
             }
         }
 
