@@ -119,7 +119,7 @@ namespace the_depot
             Console.Clear();
             Console.WriteLine("Scan code:");
             var code = Console.ReadLine() ?? string.Empty;
-            if (CodeValidationService.GetRole(code) == Constants.Roles.Visitor)
+            if (DayKeyService.GetDayKey(code)?.Role == Constants.Roles.Visitor)
             {
                 var id = DayKeyService.GetDayKey(code)?.Id;
                 if (id != null)
