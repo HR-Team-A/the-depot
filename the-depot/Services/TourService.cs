@@ -13,6 +13,18 @@ namespace the_depot.Services
         {
             var json = File.ReadAllText(Path);
             List<Tour> tours = JsonSerializer.Deserialize<List<Tour>>(json) ?? new List<Tour>();
+
+            // Load reservation data
+            var reservationsJson = File.ReadAllText(ReservationService.Path);
+            List<Reservation> reservations = JsonSerializer.Deserialize<List<Reservation>>(reservationsJson) ?? new List<Reservation>();
+
+            // Count attendees and add count to Tour object
+            foreach (var tour in tours)
+            {
+                var tourReservations = reservations.Where(r => r.Tour_Id == tour.Id && r.Attended).ToList();
+                tour.Attendees = tourReservations.Count;
+            }
+
             return tours;
         }
 
