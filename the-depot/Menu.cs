@@ -241,7 +241,7 @@ namespace the_depot
             var maxAttendees = tour.MaxAttendees;
             var attendees = tour.Attendees;
             
-            var text = $"{tourTime.ToString("H:mm")} - Plaatsen: {attendees}/{maxAttendees}";
+            String text = $"{tourTime.ToString("H:mm")} - Plaatsen: {attendees}/{maxAttendees}";
             
             optionsReservation.Add(new Option(text, () => WriteMessageAndCodeScan($"{tourTime.ToString("H:mm")} is geselecteerd", false, tourId), DateTime.MinValue));
             
