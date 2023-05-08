@@ -234,9 +234,17 @@ namespace the_depot
             }
         }
 
-        static void AddOption(DateTime tourTime, int tour_Id = 0)
+        static void AddOption(Tour tour)
         {
-            optionsReservation.Add(new Option(tourTime.ToString("H:mm"), () => WriteMessageAndCodeScan($"{tourTime.ToString("H:mm")} is geselecteerd", false, tour_Id), DateTime.MinValue));
+            var tourTime = tour.Time;
+            var tourId = tour.Id;
+            var maxAttendees = tour.MaxAttendees;
+            var attendees = tour.Attendees;
+            
+            var text = $"{tourTime.ToString("H:mm")} - Plaatsen: {attendees}/{maxAttendees}";
+            
+            optionsReservation.Add(new Option(text, () => WriteMessageAndCodeScan($"{tourTime.ToString("H:mm")} is geselecteerd", false, tourId), DateTime.MinValue));
+            
         }
 
         static void LoadReservationOptions()
@@ -247,9 +255,9 @@ namespace the_depot
             // Loop through all available tours and add them as an option.
             foreach (var tour in TourService.LoadTours().FindAll(tour => !tour.Started))
             {
-                AddOption(tour.Time, tour.Id);
+                AddOption(tour);
             }
-
+            
             optionsReservation.Add(new Option("Rondleiding annuleren", () => CancelReservation("Rondleiding is geannuleerd"), DateTime.MinValue));
             optionsReservation.Add(new Option("Admin scherm", () => WriteMessageAndCodeScan("", false, 0, true), DateTime.MinValue));
         }
