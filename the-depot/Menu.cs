@@ -245,8 +245,9 @@ namespace the_depot
             int tourId = tour.Id;
             int maxAttendees = tour.MaxAttendees;
             int attendees = TourService.GetAttendeesCount(tour.Id);
+            int availableSpots = maxAttendees - attendees;
             
-            String text = $"{tourTime.ToString("H:mm")} - Plaatsen: {attendees}/{maxAttendees}";
+            String text = $"{tourTime.ToString("H:mm")} - Vrije plekken: {availableSpots}";
             
             optionsReservation.Add(new Option(text, () => WriteMessageAndCodeScan($"{tourTime.ToString("H:mm")} is geselecteerd", false, tourId), DateTime.MinValue));
             
