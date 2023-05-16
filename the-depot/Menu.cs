@@ -242,9 +242,9 @@ namespace the_depot
         static void AddOption(Tour tour)
         {
             var tourTime = tour.Time;
-            var tourId = tour.Id;
-            var maxAttendees = tour.MaxAttendees;
-            var attendees = tour.Attendees;
+            int tourId = tour.Id;
+            int maxAttendees = tour.MaxAttendees;
+            int attendees = TourService.GetAttendeesCount(tour.Id);
             
             String text = $"{tourTime.ToString("H:mm")} - Plaatsen: {attendees}/{maxAttendees}";
             

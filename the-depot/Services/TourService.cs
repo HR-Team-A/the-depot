@@ -14,16 +14,6 @@ namespace the_depot.Services
             var json = File.ReadAllText(Path);
             List<Tour> tours = JsonSerializer.Deserialize<List<Tour>>(json) ?? new List<Tour>();
 
-            // Load reservation data
-            var reservations = ReservationService.LoadReservations();
-
-            // Count attendees and add count to Tour object
-            foreach (var tour in tours)
-            {
-                var tourReservations = reservations.Where(r => r.Tour_Id == tour.Id).ToList();
-                tour.Attendees = tourReservations.Count;
-            }
-
             return tours;
         }
 
@@ -46,6 +36,18 @@ namespace the_depot.Services
         {
             string json = JsonSerializer.Serialize(tours, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(Path, json);
+        }
+        
+        /// <summary>
+        /// get attendees count of a tour
+        /// </summary>
+        /// <param name="tour_Id"></param>
+        public static int GetAttendeesCount(int tour_Id)
+        {
+            var reservations = ReservationService.LoadReservations();
+            var tourReservations = reservations.Where(r => r.Tour_Id == tour_Id).ToList();
+            
+            return tourReservations.Count;
         }
     }
 }

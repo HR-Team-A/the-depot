@@ -3,126 +3,108 @@
     "Id": 1,
     "Time": "2023-03-27T11:00:00+02:00",
     "MaxAttendees": 13,
-    "Attendees": 1,
     "Started": true
   },
   {
     "Id": 2,
     "Time": "2023-03-27T11:20:00+02:00",
     "MaxAttendees": 13,
-    "Attendees": 0,
     "Started": true
   },
   {
     "Id": 3,
     "Time": "2023-03-27T11:40:00+02:00",
     "MaxAttendees": 13,
-    "Attendees": 1,
     "Started": true
   },
   {
     "Id": 4,
     "Time": "2023-03-27T12:00:00+02:00",
     "MaxAttendees": 13,
-    "Attendees": 1,
     "Started": true
   },
   {
     "Id": 5,
     "Time": "2023-03-27T12:20:00+02:00",
     "MaxAttendees": 13,
-    "Attendees": 0,
     "Started": false
   },
   {
     "Id": 6,
     "Time": "2023-03-27T12:40:00+02:00",
     "MaxAttendees": 13,
-    "Attendees": 0,
     "Started": false
   },
   {
     "Id": 7,
     "Time": "2023-03-27T13:00:00+02:00",
     "MaxAttendees": 13,
-    "Attendees": 0,
     "Started": true
   },
   {
     "Id": 8,
     "Time": "2023-03-27T13:20:00+02:00",
     "MaxAttendees": 13,
-    "Attendees": 0,
     "Started": false
   },
   {
     "Id": 9,
     "Time": "2023-03-27T13:40:00+02:00",
     "MaxAttendees": 13,
-    "Attendees": 0,
     "Started": false
   },
   {
     "Id": 10,
     "Time": "2023-03-27T14:00:00+02:00",
     "MaxAttendees": 13,
-    "Attendees": 0,
     "Started": false
   },
   {
     "Id": 11,
     "Time": "2023-03-27T14:20:00+02:00",
     "MaxAttendees": 13,
-    "Attendees": 0,
     "Started": false
   },
   {
     "Id": 12,
     "Time": "2023-03-27T14:40:00+02:00",
     "MaxAttendees": 13,
-    "Attendees": 0,
     "Started": false
   },
   {
     "Id": 13,
     "Time": "2023-03-27T15:00:00+02:00",
     "MaxAttendees": 13,
-    "Attendees": 0,
     "Started": false
   },
   {
     "Id": 14,
     "Time": "2023-03-27T15:20:00+02:00",
     "MaxAttendees": 13,
-    "Attendees": 0,
     "Started": false
   },
   {
     "Id": 15,
     "Time": "2023-03-27T15:40:00+02:00",
     "MaxAttendees": 13,
-    "Attendees": 0,
     "Started": false
   },
   {
     "Id": 16,
     "Time": "2023-03-27T16:00:00+02:00",
     "MaxAttendees": 13,
-    "Attendees": 0,
     "Started": false
   },
   {
     "Id": 17,
     "Time": "2023-03-27T16:20:00+02:00",
     "MaxAttendees": 13,
-    "Attendees": 0,
     "Started": false
   },
   {
     "Id": 18,
     "Time": "2023-03-27T16:40:00+02:00",
     "MaxAttendees": 13,
-    "Attendees": 0,
     "Started": false
   },
   {
@@ -130,6 +112,24 @@
     "Time": "2023-03-27T17:00:00+02:00",
     "MaxAttendees": 13,
     "Attendees": 2,
+    "Started": false
+  },
+  {
+    "Id": 20,
+    "Time": "2023-03-27T22:00:00+02:00",
+    "MaxAttendees": 13,
+    "Started": false
+  },
+  {
+    "Id": 21,
+    "Time": "2023-03-27T22:20:00+02:00",
+    "MaxAttendees": 13,
+    "Started": false
+  },
+  {
+    "Id": 22,
+    "Time": "2023-03-27T23:40:00+02:00",
+    "MaxAttendees": 13,
     "Started": false
   }
 ]
