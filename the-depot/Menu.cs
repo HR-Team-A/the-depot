@@ -23,7 +23,7 @@ namespace the_depot
         {
             Console.Clear();
             Console.WriteLine(message);
-            Console.WriteLine("Druk op een knop om door te gaan...");
+            Console.WriteLine("Druk op een knop om terug te gaan naar het hoofdmenu te gaan");
             Console.ReadKey();
             LoadReservationOptions();
             ChooseMenu(optionsReservation);
@@ -37,7 +37,7 @@ namespace the_depot
             {
                 Console.WriteLine(message);
             }
-            Console.WriteLine("Scan code:");
+            Console.WriteLine("Scan uw code:");
             var code = Console.ReadLine() ?? string.Empty;
             if (tourStarted && code == "stop")
             {
@@ -53,12 +53,12 @@ namespace the_depot
             {
                 if (!tourStarted)
                 {
-                    WriteTemporaryMessage("Code bestaat niet");
+                    WriteTemporaryMessage("Deze code is niet gevonden");
                     return;
                 }
                 else
                 {
-                    WriteMessageAndCodeScan("Uw code is niet gevonden", true, tour_Id);
+                    WriteMessageAndCodeScan("Deze code is niet gevonden", true, tour_Id);
                 }
             }
             else
@@ -73,7 +73,7 @@ namespace the_depot
                                 var error = ReservationService.SetReservationAttended(dayKey.Id, tour_Id);
                                 if (string.IsNullOrEmpty(error))
                                 {
-                                    WriteMessageAndCodeScan("U ben successvol aangemeld, laat de volgende bezoeker hun code scannen", true, tour_Id);
+                                    WriteMessageAndCodeScan("U ben succesvol aangemeld voor deze rondleiding, laat de volgende bezoeker hun code scannen", true, tour_Id);
                                 }
                                 WriteMessageAndCodeScan(error, true, tour_Id);
                             }
@@ -81,7 +81,7 @@ namespace the_depot
                             {
                                 var info = ReservationService.AddReservation(dayKey.Id, tour_Id);
                                 if (string.IsNullOrEmpty(info))
-                                    WriteTemporaryMessage("Reservering is succesvol gemaakt");
+                                    WriteTemporaryMessage("Reservering is succesvol aangemaakt");
                                 else
                                 {
                                     WriteTemporaryMessage(info);
@@ -94,10 +94,10 @@ namespace the_depot
                             break;
                         case (Constants.Roles.DepartmentHead):
                             if (!tourStarted)
-                                WriteTemporaryMessage("DepartmentHead");
+                                WriteTemporaryMessage("Dit is een code van de afdelingshoofd, uw kunt hier geen reserveringen mee plaatsen.");
                             break;
                         default:
-                            WriteTemporaryMessage("Code is niet geldig");
+                            WriteTemporaryMessage("Deze code is niet gevonden");
                             break;
 
                     }
@@ -249,7 +249,7 @@ namespace the_depot
             int attendees = TourService.GetAttendeesCount(tour.Id);
             int availableSpots = maxAttendees - attendees;
             
-            string text = availableSpots > 0 ? $"{tourTime.ToString("H:mm")} - Vrije plekken: {availableSpots}" : $"{tourTime.ToString("H:mm")} - Geen vrij plekken";
+            string text = availableSpots > 0 ? $"{tourTime.ToString("H:mm")} - beschikbare plekken: {availableSpots}" : $"{tourTime.ToString("H:mm")} - Geen beschikbare plekken";
             
             optionsReservation.Add(new Option(text, () => WriteMessageAndCodeScan($"{tourTime.ToString("H:mm")} is geselecteerd", false, tourId), DateTime.MinValue));
         }
