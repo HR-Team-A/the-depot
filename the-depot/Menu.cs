@@ -89,7 +89,7 @@ namespace the_depot
                                     {
                                         Console.WriteLine("Biep boop");
                                     }
-                                    WriteMessageAndCodeScan($"{TourService.GetTourStartingInformation(tour_Id)}  \nU ben successvol aangemeld, laat de volgende bezoeker hun code scannen", true, tour_Id);
+                                    WriteMessageAndCodeScan($"{TourService.GetTourStartingInformation(tour_Id)}  \nU bent successvol aangemeld, laat de volgende bezoeker hun code scannen", true, tour_Id);
                                 }
                                 WriteMessageAndCodeScan(error, true, tour_Id);
                             }
@@ -106,7 +106,7 @@ namespace the_depot
                             break;
                         case (Constants.Roles.Guide):
                             TourService.StartTour(tour_Id);
-                            WriteMessageAndCodeScan($"{TourService.GetTourStartingInformation(tour_Id)} \nRondleiding gestart, laat de bezoekers hun code scannen:", true, tour_Id);
+                            WriteMessageAndCodeScan($"{TourService.GetTourStartingInformation(tour_Id)} \nRondleiding gestart, laat de bezoekers hun code scannen:", false, tour_Id);
                             break;
                         case (Constants.Roles.DepartmentHead):
                             if (!tourStarted)
