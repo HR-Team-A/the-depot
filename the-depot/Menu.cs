@@ -110,7 +110,7 @@ namespace the_depot
                             break;
                         case (Constants.Roles.DepartmentHead):
                             if (!tourStarted)
-                                WriteTemporaryMessage("Dit is een code van de afdelingshoofd, u kunt hier geen reserveringen mee plaatsen.");
+                                WriteTemporaryMessage("Dit is een code van het afdelingshoofd, u kunt hier geen reserveringen mee plaatsen.");
                             break;
                         default:
                             WriteTemporaryMessage("Deze code is niet gevonden.");
