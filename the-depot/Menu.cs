@@ -143,7 +143,7 @@ namespace the_depot
         static void ShowAdminData()
         {
             Console.Clear();
-            List<string> recommendations = AfdelingshoofdService.GetRecommendations();
+            List<string> recommendations = AdminService.GetRecommendations();
             if (!recommendations.Any())
             {
                 WriteTemporaryMessage("Op dit moment zijn er geen aanpassingen nodig.");
