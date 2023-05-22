@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using ConsoleApp;
 using the_depot.Models;
 using the_depot.Services;
@@ -73,7 +74,16 @@ namespace the_depot
                                 var error = ReservationService.SetReservationAttended(dayKey.Id, tour_Id);
                                 if (string.IsNullOrEmpty(error))
                                 {
-                                    WriteMessageAndCodeScan("U ben succesvol aangemeld voor deze rondleiding, laat de volgende bezoeker hun code scannen", true, tour_Id);
+                                    // We check the OS, only windows supports the useage of Console.Beep();
+                                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                                    {
+                                        Console.Beep();
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Successful beep sound!");
+                                    }
+                                    WriteMessageAndCodeScan("U bent succesvol aangemeld voor deze rondleiding, laat de volgende bezoeker hun code scannen", true, tour_Id);
                                 }
                                 WriteMessageAndCodeScan(error, true, tour_Id);
                             }
@@ -110,7 +120,7 @@ namespace the_depot
                             ShowAdminData();
                             break;
                         default:
-                            WriteTemporaryMessage("Code is niet geldig");
+                            WriteTemporaryMessage("Deze code is niet geldig");
                             break;
                     }
                 }
@@ -144,12 +154,15 @@ namespace the_depot
         static void ShowAdminData()
         {
             Console.Clear();
-            adminOptions = new List<Option>();
-            adminOptions.Add(new Option("Dag overzicht", () => ChooseDate(), DateTime.MinValue));
-            adminOptions.Add(new Option("Week overzicht", () => ChooseDate(), DateTime.MinValue));
-            adminOptions.Add(new Option("Maand overzicht", () => ChooseDate(), DateTime.MinValue));
-
-            ChooseMenu(adminOptions);
+            List<string> recommendations = AdminService.GetRecommendations();
+            if (!recommendations.Any())
+            {
+                WriteTemporaryMessage("Op dit moment zijn er geen aanpassingen nodig.");
+            }
+            
+            // Make string of list, split by new line.
+            string recommendationStr = string.Join("\n", recommendations);
+            WriteTemporaryMessage(recommendationStr);
         }
 
         static void ChooseDate()
@@ -270,7 +283,7 @@ namespace the_depot
             }
             
             optionsReservation.Add(new Option("Rondleiding annuleren", () => CancelReservation("Rondleiding is geannuleerd"), DateTime.MinValue));
-            optionsReservation.Add(new Option("Admin scherm", () => WriteMessageAndCodeScan("", false, 0, true), DateTime.MinValue));
+            optionsReservation.Add(new Option("Afdelingshoofd menu", () => WriteMessageAndCodeScan("", false, 0, true), DateTime.MinValue));
         }
     }
     public class Option
