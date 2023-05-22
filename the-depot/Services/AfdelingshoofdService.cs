@@ -5,9 +5,11 @@ namespace the_depot.Services
         public static List<string> GetRecommendations()
         {
             List<string> recommendations = new List<string>();
-
+            
             var reservations = ReservationService.LoadReservations();
-            var tours = TourService.LoadTours();
+            
+            var currentTime = DateTime.Now.TimeOfDay;
+            var tours = TourService.LoadTours().Where(x => x.Started);
 
             foreach (var tour in tours)
             {
