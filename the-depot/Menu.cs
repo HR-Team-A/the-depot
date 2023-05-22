@@ -104,7 +104,7 @@ namespace the_depot
                             break;
                         case (Constants.Roles.DepartmentHead):
                             if (!tourStarted)
-                                WriteTemporaryMessage("DepartmentHead");
+                                WriteTemporaryMessage("Code is voor afdelingshoofd, reserveren is niet mogelijk.");
                             break;
                         default:
                             WriteTemporaryMessage("Code is niet geldig");
@@ -154,12 +154,15 @@ namespace the_depot
         static void ShowAdminData()
         {
             Console.Clear();
-            adminOptions = new List<Option>();
-            adminOptions.Add(new Option("Dag overzicht", () => ChooseDate(), DateTime.MinValue));
-            adminOptions.Add(new Option("Week overzicht", () => ChooseDate(), DateTime.MinValue));
-            adminOptions.Add(new Option("Maand overzicht", () => ChooseDate(), DateTime.MinValue));
-
-            ChooseMenu(adminOptions);
+            List<string> recommendations = AdminService.GetRecommendations();
+            if (!recommendations.Any())
+            {
+                WriteTemporaryMessage("Op dit moment zijn er geen aanpassingen nodig.");
+            }
+            
+            // Make string of list, split by new line.
+            string recommendationStr = string.Join("\n", recommendations);
+            WriteTemporaryMessage(recommendationStr);
         }
 
         static void ChooseDate()
@@ -280,7 +283,7 @@ namespace the_depot
             }
             
             optionsReservation.Add(new Option("Rondleiding annuleren", () => CancelReservation("Rondleiding is geannuleerd"), DateTime.MinValue));
-            optionsReservation.Add(new Option("Admin scherm", () => WriteMessageAndCodeScan("", false, 0, true), DateTime.MinValue));
+            optionsReservation.Add(new Option("Afdelingshoofd menu", () => WriteMessageAndCodeScan("", false, 0, true), DateTime.MinValue));
         }
     }
     public class Option
