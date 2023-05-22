@@ -24,7 +24,7 @@ namespace the_depot
         {
             Console.Clear();
             Console.WriteLine(message);
-            Console.WriteLine("Druk op een knop om terug te gaan naar het hoofdmenu te gaan");
+            Console.WriteLine("Druk op een knop om terug te gaan naar het hoofdmenu te gaan.");
             Console.ReadKey();
             LoadReservationOptions();
             ChooseMenu(optionsReservation);
@@ -54,12 +54,12 @@ namespace the_depot
             {
                 if (!tourStarted)
                 {
-                    WriteTemporaryMessage("Deze code is niet gevonden");
+                    WriteTemporaryMessage("Deze code is niet gevonden.");
                     return;
                 }
                 else
                 {
-                    WriteMessageAndCodeScan("Deze code is niet gevonden", true, tour_Id);
+                    WriteMessageAndCodeScan("Deze code is niet gevonden.", true, tour_Id);
                 }
             }
             else
@@ -81,9 +81,9 @@ namespace the_depot
                                     }
                                     else
                                     {
-                                        Console.WriteLine("Successful beep sound!");
+                                        Console.WriteLine("Biep boop");
                                     }
-                                    WriteMessageAndCodeScan("U bent succesvol aangemeld voor deze rondleiding, laat de volgende bezoeker hun code scannen", true, tour_Id);
+                                    WriteMessageAndCodeScan("U bent succesvol aangemeld voor deze rondleiding, laat de volgende bezoeker hun code scannen.", true, tour_Id);
                                 }
                                 WriteMessageAndCodeScan(error, true, tour_Id);
                             }
@@ -91,7 +91,7 @@ namespace the_depot
                             {
                                 var info = ReservationService.AddReservation(dayKey.Id, tour_Id);
                                 if (string.IsNullOrEmpty(info))
-                                    WriteTemporaryMessage("Reservering is succesvol aangemaakt");
+                                    WriteTemporaryMessage("Reservering is succesvol aangemaakt.");
                                 else
                                 {
                                     WriteTemporaryMessage(info);
@@ -107,7 +107,7 @@ namespace the_depot
                                 WriteTemporaryMessage("Dit is een code van de afdelingshoofd, uw kunt hier geen reserveringen mee plaatsen.");
                             break;
                         default:
-                            WriteTemporaryMessage("Deze code is niet gevonden");
+                            WriteTemporaryMessage("Deze code is niet gevonden.");
                             break;
 
                     }
@@ -120,7 +120,7 @@ namespace the_depot
                             ShowAdminData();
                             break;
                         default:
-                            WriteTemporaryMessage("Deze code is niet geldig");
+                            WriteTemporaryMessage("Deze code is niet geldig.");
                             break;
                     }
                 }
@@ -148,7 +148,7 @@ namespace the_depot
                 WriteTemporaryMessage(message);
             }
             else
-                WriteTemporaryMessage("Code is niet geldig");
+                WriteTemporaryMessage("Code is niet geldig.");
         }
 
         static void ShowAdminData()
@@ -163,29 +163,6 @@ namespace the_depot
             // Make string of list, split by new line.
             string recommendationStr = string.Join("\n", recommendations);
             WriteTemporaryMessage(recommendationStr);
-        }
-
-        static void ChooseDate()
-        {
-            Console.Clear();
-            Console.WriteLine("Vul een datum in (dd/mm/yyyy):");
-
-            DateTime date;
-            string[] formats = { "dd/MM/yyyy", "dd/M/yyyy", "d/M/yyyy", "d/MM/yyyy",
-                "dd/MM/yy", "dd/M/yy", "d/M/yy", "d/MM/yy", "yyyy/MM/dd", "yyyy/M/dd", "yyyy/MM/d", "yyyy/M/d"};
-
-            while (!DateTime.TryParseExact(Console.ReadLine(), formats,
-                 System.Globalization.CultureInfo.InvariantCulture,
-                 System.Globalization.DateTimeStyles.None,
-                 out date))
-            {
-                Console.Clear();
-                Console.WriteLine("Vul een datum in (dd/mm/yyyy):");
-                Console.WriteLine("Verkeerde input. Probeer opnieuw.");
-            }
-            Console.Clear();
-            Console.WriteLine("Datum geselecteerd: " + date);
-            Console.WriteLine("TODO: Add data");
         }
 
         static void ChooseMenu(List<Option> options)
