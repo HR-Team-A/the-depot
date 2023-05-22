@@ -69,6 +69,10 @@ namespace the_depot
                     switch (dayKey.Role)
                     {
                         case (Constants.Roles.Visitor):
+                            if (TourService.GetAttendeesCount(tour_Id) == TourService.GetTour(tour_Id).MaxAttendees)
+                            {
+                                WriteTemporaryMessage("Tour is al vol, kies alsjeblieft een andere tour.");
+                            }
                             if (tourStarted)
                             {
                                 var error = ReservationService.SetReservationAttended(dayKey.Id, tour_Id);
