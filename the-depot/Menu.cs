@@ -23,7 +23,8 @@ namespace the_depot
         {
             Console.Clear();
             Console.WriteLine(message);
-            Thread.Sleep(5000);
+            Console.WriteLine("Druk op een knop om door te gaan...");
+            Console.ReadKey();
             ChooseMenu(optionsReservation);
         }
 
