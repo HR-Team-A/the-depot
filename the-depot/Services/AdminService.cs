@@ -22,7 +22,7 @@ namespace the_depot.Services
                 }
                 else if( percent > 80)
                 {
-                    recommendations.Add($"De rondleiding om {tour.Time.ToString("HH:mm")} had {reservationCount} bezoekers. Wij adviseren meer bezoekers toe te laten, of een rondleiding toe te toevoegen.");
+                    recommendations.Add($"De rondleiding om {tour.Time.ToString("HH:mm")} had {reservationCount} bezoekers. Wij adviseren meer bezoekers toe te laten, of een rondleiding toe te voegen.");
                 }
             }
 
