@@ -268,17 +268,4 @@ namespace the_depot
             optionsReservation.Add(new Option("Afdelingshoofd menu", () => WriteMessageAndCodeScan("", false, 0, true), DateTime.MinValue));
         }
     }
-    public class Option
-    {
-        public string Name { get; }
-        public Action Selected { get; }
-        public DateTime Time { get; }
-
-        public Option(string name, Action selected, DateTime time)
-        {
-            Time = time;
-            Name = name;
-            Selected = selected;
-        }
-    }
 }
