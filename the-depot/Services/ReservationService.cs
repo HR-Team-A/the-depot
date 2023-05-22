@@ -24,7 +24,7 @@ namespace the_depot.Services
             var reservation = reservations.FirstOrDefault(x => x.Key_Id == dayKey_Id && x.Tour_Id == tour_Id);
             if (reservation == null)
             {
-                return "Er is geen reservering gevonden met uw sleutel";
+                return "Er is geen reservering gevonden met uw code";
             }
             reservation.Attended = true;
             SaveData(reservations);
@@ -35,7 +35,7 @@ namespace the_depot.Services
         {
             var reservations = LoadReservations();
             if (reservations.Any(x => x.Key_Id == dayKey_Id && x.Attended))
-                return "Reservering mislukt, je hebt vandaag al deelgenomen aan een rondleiding. ";
+                return "Reservering mislukt, u heeft vandaag al deelgenomen aan een rondleiding.";
             if (reservations.Any(x => x.Key_Id == dayKey_Id))
             {
                 var reservation = reservations.First(x => x.Key_Id == dayKey_Id);
@@ -61,7 +61,7 @@ namespace the_depot.Services
                 if (!reservation.Attended)
                     reservations.Remove(reservation);
                 else
-                    error = "Je hebt al deelgenomen aan een rondleiding je kan die niet annuleren.";
+                    error = "U heeft al deelgenomen aan een rondleiding, u kunt deze niet annuleren.";
             }
             SaveData(reservations);
             return reservations;
