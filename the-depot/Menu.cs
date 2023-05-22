@@ -78,12 +78,12 @@ namespace the_depot
                             }
                             else
                             {
-                                var error = ReservationService.AddReservation(dayKey.Id, tour_Id);
-                                if (string.IsNullOrEmpty(error))
+                                var info = ReservationService.AddReservation(dayKey.Id, tour_Id);
+                                if (string.IsNullOrEmpty(info))
                                     WriteTemporaryMessage("Reservering is succesvol gemaakt");
                                 else
                                 {
-                                    WriteTemporaryMessage(error);
+                                    WriteTemporaryMessage(info);
                                 }
                             }
                             break;

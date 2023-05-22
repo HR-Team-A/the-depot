@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Runtime.CompilerServices;
+using System.Text.Json;
 using System.Xml;
 using System.Xml.Linq;
 using the_depot.Models;
@@ -14,6 +15,12 @@ namespace the_depot.Services
             var json = File.ReadAllText(Path);
             List<Tour> tours = JsonSerializer.Deserialize<List<Tour>>(json) ?? new List<Tour>();
             return tours;
+        }
+
+        public static Tour? GetTour(int tourId)
+        {
+            var tours = LoadTours();
+            return tours.FirstOrDefault(x => x.Id == tourId);
         }
 
         public static void StartTour(int tour_Id)
