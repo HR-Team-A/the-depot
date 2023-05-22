@@ -35,6 +35,14 @@ namespace the_depot.Services
             SaveData(tours);
         }
 
+        public static string GetTourStartingInformation(int tour_id)
+        {
+            var tour = GetTour(tour_id);
+            var attendeesCount = GetAttendeesCount(tour_id);
+            var attendedCount = GetAttendedCount(tour_id);
+            return $"{attendedCount} / {attendeesCount} gescanned, {tour!.MaxAttendees - attendeesCount} extra plekken over.";
+        }
+
         /// <summary>
         /// data data to file
         /// </summary>
@@ -53,6 +61,19 @@ namespace the_depot.Services
             var reservations = ReservationService.LoadReservations();
             var tourReservations = reservations.Where(r => r.Tour_Id == tour_Id).ToList();
             
+            return tourReservations.Count;
+        }
+
+
+        /// <summary>
+        /// get attendees count of a tour
+        /// </summary>
+        /// <param name="tour_Id"></param>
+        public static int GetAttendedCount(int tour_Id)
+        {
+            var reservations = ReservationService.LoadReservations();
+            var tourReservations = reservations.Where(r => r.Tour_Id == tour_Id && r.Attended).ToList();
+
             return tourReservations.Count;
         }
     }

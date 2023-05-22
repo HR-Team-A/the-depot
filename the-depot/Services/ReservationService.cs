@@ -24,9 +24,20 @@ namespace the_depot.Services
             var reservation = reservations.FirstOrDefault(x => x.Key_Id == dayKey_Id && x.Tour_Id == tour_Id);
             if (reservation == null)
             {
-                return "Er is geen reservering gevonden met uw sleutel";
+                var tour = TourService.GetTour(tour_Id);
+                var attendeesCount = TourService.GetAttendeesCount(tour_Id);
+                if (tour!.MaxAttendees <= attendeesCount)
+                {
+                    return "De rondleiding zit vol.";
+                }
+                var message = AddReservation(dayKey_Id, tour_Id);
+                if (message == "Reservering mislukt, je hebt vandaag al deelgenomen aan een rondleiding. ")
+                    return message;
+                reservations = LoadReservations();
+                reservation = reservations.FirstOrDefault(x => x.Key_Id == dayKey_Id && x.Tour_Id == tour_Id);
+
             }
-            reservation.Attended = true;
+            reservation!.Attended = true;
             SaveData(reservations);
             return "";
         }

@@ -1,12 +1,17 @@
 [
   {
     "Key_Id": 2,
-    "Tour_Id": 1,
-    "Attended": false
+    "Tour_Id": 20,
+    "Attended": true
+  },
+  {
+    "Key_Id": 3,
+    "Tour_Id": 20,
+    "Attended": true
   },
   {
     "Key_Id": 1,
-    "Tour_Id": 3,
-    "Attended": false
+    "Tour_Id": 21,
+    "Attended": true
   }
 ]
