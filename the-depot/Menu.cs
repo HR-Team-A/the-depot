@@ -25,6 +25,7 @@ namespace the_depot
             Console.WriteLine(message);
             Console.WriteLine("Druk op een knop om door te gaan...");
             Console.ReadKey();
+            LoadReservationOptions();
             ChooseMenu(optionsReservation);
         }
 
@@ -240,9 +241,17 @@ namespace the_depot
             }
         }
 
-        static void AddOption(DateTime tourTime, int tour_Id = 0)
+        static void AddOption(Tour tour)
         {
-            optionsReservation.Add(new Option(tourTime.ToString("H:mm"), () => WriteMessageAndCodeScan($"{tourTime.ToString("H:mm")} is geselecteerd", false, tour_Id), DateTime.MinValue));
+            var tourTime = tour.Time;
+            int tourId = tour.Id;
+            int maxAttendees = tour.MaxAttendees;
+            int attendees = TourService.GetAttendeesCount(tour.Id);
+            int availableSpots = maxAttendees - attendees;
+            
+            string text = availableSpots > 0 ? $"{tourTime.ToString("H:mm")} - Vrije plekken: {availableSpots}" : $"{tourTime.ToString("H:mm")} - Geen vrij plekken";
+            
+            optionsReservation.Add(new Option(text, () => WriteMessageAndCodeScan($"{tourTime.ToString("H:mm")} is geselecteerd", false, tourId), DateTime.MinValue));
         }
 
         static void LoadReservationOptions()
@@ -256,10 +265,10 @@ namespace the_depot
                 string tourTime = tour.Time.ToShortTimeString();
                 if (DateTime.Parse(dateTimeNowStr) < DateTime.Parse(tourTime))
                 {
-                    AddOption(tour.Time, tour.Id);
+                    AddOption(tour);
                 }
             }
-
+            
             optionsReservation.Add(new Option("Rondleiding annuleren", () => CancelReservation("Rondleiding is geannuleerd"), DateTime.MinValue));
             optionsReservation.Add(new Option("Admin scherm", () => WriteMessageAndCodeScan("", false, 0, true), DateTime.MinValue));
         }
