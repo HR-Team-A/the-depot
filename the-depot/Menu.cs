@@ -93,7 +93,7 @@ namespace the_depot
                             break;
                         case (Constants.Roles.DepartmentHead):
                             if (!tourStarted)
-                                WriteTemporaryMessage("DepartmentHead");
+                                WriteTemporaryMessage("Code is voor afdelingshoofd, reserveren is niet mogelijk.");
                             break;
                         default:
                             WriteTemporaryMessage("Code is niet geldig");
