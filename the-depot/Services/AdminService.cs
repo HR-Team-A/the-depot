@@ -1,6 +1,6 @@
 namespace the_depot.Services
 {
-    public static class AfdelingshoofdService
+    public static class AdminService
     {
         public static List<string> GetRecommendations()
         {
