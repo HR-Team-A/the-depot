@@ -116,19 +116,19 @@
   {
     "Id": 20,
     "Time": "2023-03-27T22:00:00+02:00",
-    "MaxAttendees": 13,
+    "MaxAttendees": 8,
     "Started": false
   },
   {
     "Id": 21,
     "Time": "2023-03-27T22:20:00+02:00",
     "MaxAttendees": 13,
-    "Started": true
+    "Started": false
   },
   {
     "Id": 22,
     "Time": "2023-03-27T23:40:00+02:00",
     "MaxAttendees": 0,
-    "Started": true
+    "Started": false
   }
 ]
