@@ -143,12 +143,15 @@ namespace the_depot
         static void ShowAdminData()
         {
             Console.Clear();
-            adminOptions = new List<Option>();
-            adminOptions.Add(new Option("Dag overzicht", () => ChooseDate(), DateTime.MinValue));
-            adminOptions.Add(new Option("Week overzicht", () => ChooseDate(), DateTime.MinValue));
-            adminOptions.Add(new Option("Maand overzicht", () => ChooseDate(), DateTime.MinValue));
-
-            ChooseMenu(adminOptions);
+            var recommendations = AfdelingshoofdService.GetRecommendations();
+            if (!recommendations.Any())
+            {
+                WriteTemporaryMessage("Alles loopt soepel geen aanbevelingen.");
+            }
+            foreach (var recommendation in recommendations)
+            {
+                Console.WriteLine(recommendation);
+            }
         }
 
         static void ChooseDate()
