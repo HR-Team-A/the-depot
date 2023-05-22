@@ -16,11 +16,11 @@ namespace the_depot.Services
 
                 if(percent < 20)
                 {
-                    recommendations.Add($"De rondleiding om {tour.Time.ToString("HH:mm")} had {reservationCount} bezoekers. Je kan deze beter kleiner maken of vervallen.");
+                    recommendations.Add($"De rondleiding om {tour.Time.ToString("HH:mm")} had {reservationCount} bezoekers. Je kan deze beter kleiner maken of laten vervallen.");
                 }
                 else if( percent > 80)
                 {
-                    recommendations.Add($"De rondleiding om {tour.Time.ToString("HH:mm")} had {reservationCount} bezoekers. Je kan deze beter groter maken of een rondleiding toe voegen.");
+                    recommendations.Add($"De rondleiding om {tour.Time.ToString("HH:mm")} had {reservationCount} bezoekers. Je kan deze beter groter maken of een rondleiding toevoegen.");
                 }
             }
 
