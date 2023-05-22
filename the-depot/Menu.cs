@@ -148,10 +148,10 @@ namespace the_depot
             {
                 WriteTemporaryMessage("Alles loopt soepel geen aanbevelingen.");
             }
-            foreach (var recommendation in recommendations)
-            {
-                Console.WriteLine(recommendation);
-            }
+            
+            // Make string of list, split by new line.
+            string recommendationStr = string.Join("\n", recommendations);
+            WriteTemporaryMessage(recommendationStr);
         }
 
         static void ChooseDate()
