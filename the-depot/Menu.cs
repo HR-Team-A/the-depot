@@ -23,9 +23,8 @@ namespace the_depot
         {
             Console.Clear();
             Console.WriteLine(message);
-            Thread.Sleep(5000);
-            
-            // Reload menu to update attendees and go back to the tour menu
+            Console.WriteLine("Druk op een knop om door te gaan...");
+            Console.ReadKey();
             LoadReservationOptions();
             ChooseMenu(optionsReservation);
         }
@@ -223,11 +222,13 @@ namespace the_depot
         static void WriteMenu(List<Option> options, Option selectedOption)
         {
             Console.Clear();
-
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("Gebruik de pijltjestoetsen om door het menu bewegen.");
             foreach (Option option in options)
             {
                 if (option == selectedOption)
                 {
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.Write("> ");
                 }
                 else
@@ -236,6 +237,7 @@ namespace the_depot
                 }
 
                 Console.WriteLine(option.Name);
+                Console.ForegroundColor = ConsoleColor.White;
             }
         }
 
