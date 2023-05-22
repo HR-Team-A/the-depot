@@ -143,35 +143,15 @@ namespace the_depot
         static void ShowAdminData()
         {
             Console.Clear();
-            adminOptions = new List<Option>();
-            adminOptions.Add(new Option("Dag overzicht", () => ChooseDate(), DateTime.MinValue));
-            adminOptions.Add(new Option("Week overzicht", () => ChooseDate(), DateTime.MinValue));
-            adminOptions.Add(new Option("Maand overzicht", () => ChooseDate(), DateTime.MinValue));
-
-            ChooseMenu(adminOptions);
-        }
-
-        static void ChooseDate()
-        {
-            Console.Clear();
-            Console.WriteLine("Vul een datum in (dd/mm/yyyy):");
-
-            DateTime date;
-            string[] formats = { "dd/MM/yyyy", "dd/M/yyyy", "d/M/yyyy", "d/MM/yyyy",
-                "dd/MM/yy", "dd/M/yy", "d/M/yy", "d/MM/yy", "yyyy/MM/dd", "yyyy/M/dd", "yyyy/MM/d", "yyyy/M/d"};
-
-            while (!DateTime.TryParseExact(Console.ReadLine(), formats,
-                 System.Globalization.CultureInfo.InvariantCulture,
-                 System.Globalization.DateTimeStyles.None,
-                 out date))
+            var recommendations = AfdelingshoofdService.GetRecommendations();
+            if (!recommendations.Any())
             {
-                Console.Clear();
-                Console.WriteLine("Vul een datum in (dd/mm/yyyy):");
-                Console.WriteLine("Verkeerde input. Probeer opnieuw.");
+                WriteTemporaryMessage("Alles loopt soepel geen aanbevelingen.");
             }
-            Console.Clear();
-            Console.WriteLine("Datum geselecteerd: " + date);
-            Console.WriteLine("TODO: Add data");
+            foreach (var recommendation in recommendations)
+            {
+                Console.WriteLine(recommendation);
+            }
         }
 
         static void ChooseMenu(List<Option> options)
