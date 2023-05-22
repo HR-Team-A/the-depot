@@ -1,4 +1,4 @@
-﻿namespace the_depot
+﻿namespace the_depot.Models
 {
     public class Option
     {
