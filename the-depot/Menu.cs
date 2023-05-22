@@ -146,7 +146,7 @@ namespace the_depot
             List<string> recommendations = AfdelingshoofdService.GetRecommendations();
             if (!recommendations.Any())
             {
-                WriteTemporaryMessage("Alles loopt soepel geen aanbevelingen.");
+                WriteTemporaryMessage("Op dit moment zijn er geen aanpassingen nodig.");
             }
             
             // Make string of list, split by new line.
