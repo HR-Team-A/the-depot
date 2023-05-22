@@ -264,7 +264,7 @@ namespace the_depot
             }
 
             optionsReservation.Add(new Option("Rondleiding annuleren", () => CancelReservation("Rondleiding is geannuleerd"), DateTime.MinValue));
-            optionsReservation.Add(new Option("Admin scherm", () => WriteMessageAndCodeScan("", false, 0, true), DateTime.MinValue));
+            optionsReservation.Add(new Option("Afdelingshoofd menu", () => WriteMessageAndCodeScan("", false, 0, true), DateTime.MinValue));
         }
     }
     public class Option
