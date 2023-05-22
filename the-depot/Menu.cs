@@ -69,7 +69,9 @@ namespace the_depot
                     switch (dayKey.Role)
                     {
                         case (Constants.Roles.Visitor):
-                            if (TourService.GetAttendeesCount(tour_Id) == TourService.GetTour(tour_Id).MaxAttendees)
+                            var tour = TourService.GetTour(tour_Id);
+
+                            if (tour != null && TourService.GetAttendeesCount(tour_Id) == tour.MaxAttendees)
                             {
                                 WriteTemporaryMessage("Tour is al vol, kies alsjeblieft een andere tour.");
                             }
