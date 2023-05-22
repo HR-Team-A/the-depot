@@ -143,7 +143,7 @@ namespace the_depot
         static void ShowAdminData()
         {
             Console.Clear();
-            var recommendations = AfdelingshoofdService.GetRecommendations();
+            List<string> recommendations = AfdelingshoofdService.GetRecommendations();
             if (!recommendations.Any())
             {
                 WriteTemporaryMessage("Alles loopt soepel geen aanbevelingen.");

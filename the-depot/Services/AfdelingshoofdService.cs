@@ -4,7 +4,7 @@ namespace the_depot.Services
     {
         public static List<string> GetRecommendations()
         {
-            var recommendations = new List<string>();
+            List<string> recommendations = new List<string>();
 
             var reservations = ReservationService.LoadReservations();
             var tours = TourService.LoadTours();
