@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using ConsoleApp;
 using the_depot.Models;
 using the_depot.Services;
@@ -73,6 +74,15 @@ namespace the_depot
                                 var error = ReservationService.SetReservationAttended(dayKey.Id, tour_Id);
                                 if (string.IsNullOrEmpty(error))
                                 {
+                                    // We check the OS, only windows supports the useage of Console.Beep();
+                                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                                    {
+                                        Console.Beep();
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Successful beep sound!");
+                                    }
                                     WriteMessageAndCodeScan("U ben successvol aangemeld, laat de volgende bezoeker hun code scannen", true, tour_Id);
                                 }
                                 WriteMessageAndCodeScan(error, true, tour_Id);
