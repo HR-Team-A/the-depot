@@ -70,11 +70,6 @@ namespace the_depot
                     {
                         case (Constants.Roles.Visitor):
                             var tour = TourService.GetTour(tour_Id);
-
-                            if (tour != null && TourService.GetAttendeesCount(tour_Id) == tour.MaxAttendees)
-                            {
-                                WriteTemporaryMessage("Tour is al vol, kies alsjeblieft een andere tour.");
-                            }
                             if (tourStarted)
                             {
                                 var error = ReservationService.SetReservationAttended(dayKey.Id, tour_Id);
@@ -95,6 +90,10 @@ namespace the_depot
                             }
                             else
                             {
+                                if (tour != null && TourService.GetAttendeesCount(tour_Id) == tour.MaxAttendees)
+                                {
+                                    WriteTemporaryMessage("Rondleiding is al vol, kies alsjeblieft een andere rondleiding.");
+                                }
                                 var info = ReservationService.AddReservation(dayKey.Id, tour_Id);
                                 if (string.IsNullOrEmpty(info))
                                     WriteTemporaryMessage("Reservering is succesvol aangemaakt.");
@@ -106,7 +105,7 @@ namespace the_depot
                             break;
                         case (Constants.Roles.Guide):
                             TourService.StartTour(tour_Id);
-                            WriteMessageAndCodeScan($"{TourService.GetTourStartingInformation(tour_Id)} \nRondleiding gestart, laat de bezoekers hun code scannen:", false, tour_Id);
+                            WriteMessageAndCodeScan($"{TourService.GetTourStartingInformation(tour_Id)} \nRondleiding gestart, laat de bezoekers hun code scannen:", true, tour_Id);
                             break;
                         case (Constants.Roles.DepartmentHead):
                             if (!tourStarted)
