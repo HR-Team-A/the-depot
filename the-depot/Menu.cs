@@ -92,7 +92,7 @@ namespace the_depot
                             {
                                 if (tour != null && TourService.GetAttendeesCount(tour_Id) == tour.MaxAttendees)
                                 {
-                                    WriteTemporaryMessage("Tour is al vol, kies alsjeblieft een andere tour.");
+                                    WriteTemporaryMessage("Rondleiding is al vol, kies alsjeblieft een andere rondleiding.");
                                 }
                                 var info = ReservationService.AddReservation(dayKey.Id, tour_Id);
                                 if (string.IsNullOrEmpty(info))
