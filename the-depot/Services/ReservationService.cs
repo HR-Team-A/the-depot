@@ -51,6 +51,12 @@ namespace the_depot.Services
                 var reservation = reservations.First(x => x.Key_Id == dayKey_Id);
                 reservations = CancelReservation(dayKey_Id, out string error);
                 var tour = TourService.GetTour(reservation.Tour_Id);
+                if (tour_Id == tour!.Id)
+                {
+                    reservations.Add(new Reservation { Attended = false, Key_Id = dayKey_Id, Tour_Id = tour_Id });
+                    SaveData(reservations);
+                    return string.Empty;
+                }
                 string tourTime = tour!.Time.ToString("H:mm");
                 reservations.Add(new Reservation { Attended = false, Key_Id = dayKey_Id, Tour_Id = tour_Id });
                 SaveData(reservations);
