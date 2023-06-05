@@ -1,3 +1,4 @@
+using System;
 using TheDepot.Repositories;
 
 namespace TheDepot.Services
@@ -49,11 +50,11 @@ namespace TheDepot.Services
             var dayKey = DayKeyRepository.GetByKey(code);
             if (dayKey == null)
             {
-                ScanAdminCode("Deze code is niet gevonden, probeer het opnieuw:");
+                Menu.WriteTemporaryMessageAndReturnToMenu("Deze code is niet gevonden, probeer het opnieuw:");
             }
             if (dayKey!.Role != Constants.Roles.DepartmentHead)
             {
-                ScanAdminCode("Deze code heeft verkeerde rechten, probeer het opnieuw:");
+                Menu.WriteTemporaryMessageAndReturnToMenu("Deze code heeft verkeerde rechten, probeer het opnieuw:");
             }
             MakeAdminList();
         }
