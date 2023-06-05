@@ -31,7 +31,7 @@ namespace TheDepot.Services
             var key = DayKeyRepository.GetByKey(code);
             if (key == null || key.Role == Roles.None)
             {
-                Menu.WriteTemporaryMessageAndReturnToMenu("Deze sleutel is niet gevonden");
+                Menu.WriteTemporaryMessageAndReturnToMenu("Deze code is niet gevonden");
             }
             if(key!.Role == Constants.Roles.DepartmentHead)
             {

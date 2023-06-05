@@ -55,11 +55,11 @@ namespace TheDepot.Services
             }
             if (dayKey == null)
             {
-                ScanCodeToAttend(tour, $"{TourService.GetTourStartingInformation(tour.Id)}  \nDeze sleutel is niet gevonden, probeer het opnieuw");
+                ScanCodeToAttend(tour, $"{TourService.GetTourStartingInformation(tour.Id)}  \nDeze code is niet gevonden, probeer het opnieuw");
             }
             if(dayKey!.Role != Constants.Roles.Visitor)
             {
-                ScanCodeToAttend(tour, $"{TourService.GetTourStartingInformation(tour.Id)}  \nDeze sleutel heeft verkeerde rechten");
+                ScanCodeToAttend(tour, $"{TourService.GetTourStartingInformation(tour.Id)}  \nDeze code heeft verkeerde rechten");
             }
             var succeeded = ReservationService.SetReservationAttended(dayKey!.Id, tour.Id, out string error);
             if (!succeeded)
