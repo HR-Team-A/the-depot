@@ -1,5 +1,6 @@
 using System.Runtime.InteropServices;
 using ConsoleApp;
+using the_depot;
 using TheDepot.Models;
 using TheDepot.Repositories;
 using TheDepot.Services;
@@ -17,8 +18,8 @@ namespace TheDepot
 
         public static void WriteTemporaryMessage(string message, string returnMessage) {
             Console.Clear();
-            Console.WriteLine(message);
-            Console.WriteLine(returnMessage);
+            OutputStatic.Output.WriteLine(message);
+            OutputStatic.Output.WriteLine(returnMessage);
             Console.ReadKey();
         }
 

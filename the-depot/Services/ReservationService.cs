@@ -160,7 +160,7 @@ namespace TheDepot.Services
             {
                 Menu.WriteTemporaryMessageAndReturnToMenu("Deze code is niet gevonden.");
             }
-            if (dayKey.Role != Constants.Roles.Visitor)
+            if (dayKey!.Role != Constants.Roles.Visitor)
             {
                 Menu.WriteTemporaryMessageAndReturnToMenu("Deze code is niet geldig.");
             }
