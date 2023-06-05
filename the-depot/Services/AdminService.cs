@@ -1,3 +1,4 @@
+using System;
 using TheDepot.Repositories;
 
 namespace TheDepot.Services
@@ -32,7 +33,7 @@ namespace TheDepot.Services
         public static void MakeAdminList()
         {
             Console.Clear();
-            List<string> recommendations = AdminService.GetRecommendations();
+            List<string> recommendations = GetRecommendations();
             if (!recommendations.Any())
             {
                 Menu.WriteTemporaryMessageAndReturnToMenu("Op dit moment zijn er geen aanpassingen nodig.");
@@ -41,6 +42,21 @@ namespace TheDepot.Services
             // Make string of list, split by new line.
             string recommendationStr = string.Join("\n", recommendations);
             Menu.WriteTemporaryMessageAndReturnToMenu(recommendationStr);
+        }
+
+        public static void ScanAdminCode(string message)
+        {
+            var code = Menu.WriteMessageAndScanCode(message);
+            var dayKey = DayKeyRepository.GetByKey(code);
+            if (dayKey == null)
+            {
+                Menu.WriteTemporaryMessageAndReturnToMenu("Deze code is niet gevonden");
+            }
+            if (dayKey!.Role != Constants.Roles.DepartmentHead)
+            {
+                Menu.WriteTemporaryMessageAndReturnToMenu("Deze code heeft verkeerde rechten");
+            }
+            MakeAdminList();
         }
     }
 }
