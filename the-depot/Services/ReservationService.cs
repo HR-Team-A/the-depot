@@ -180,11 +180,23 @@ namespace TheDepot.Services
                 Menu.WriteTemporaryMessageAndReturnToMenu("Deze code is niet geldig.");
             }
             var id = dayKey.Id;
-            var cancelled = ReservationService.CancelReservation(id, out string error);
+            var reservations = ReservationRepository.All();
+            var reservation = reservations.FirstOrDefault(x => x.Key_Id == id);
+
+            if (reservation != null)
+            {
+                var tour = TourRepository.Get(reservation!.Tour_Id);
+
+                string tourTime = tour!.Time.ToString("H:mm");
+                message = "De reservering van " + tourTime + " is succesvol geannuleerd.";
+            }
+                var cancelled = CancelReservation(id, out string error);
+
             if (!cancelled)
             {
                 Menu.WriteTemporaryMessageAndReturnToMenu(error);
             }
+
             Menu.WriteTemporaryMessageAndReturnToMenu(message);
         }
 
