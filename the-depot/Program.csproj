@@ -13,13 +13,11 @@
     <None Remove="Constants\" />
     <None Remove="Caches\" />
     <None Remove="Repositories\" />
-    <None Remove="Interfaces\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="Constants\" />
     <Folder Include="Caches\" />
     <Folder Include="Repositories\" />
-    <Folder Include="Interfaces\" />
   </ItemGroup>
 </Project>
