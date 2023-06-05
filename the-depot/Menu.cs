@@ -18,9 +18,9 @@ namespace TheDepot
 
         public static void WriteTemporaryMessage(string message, string returnMessage) {
             Console.Clear();
-            OutputStatic.Output.WriteLine(message);
-            OutputStatic.Output.WriteLine(returnMessage);
-            OutputStatic.Output.ReadKey();
+            Console.WriteLine(message);
+            Console.WriteLine(returnMessage);
+            Console.ReadKey();
         }
 
         // Default action of all the options. You can create more methods
@@ -36,7 +36,7 @@ namespace TheDepot
         {
             Console.Clear();
             Console.WriteLine(message);
-            var code = OutputStatic.Output.ReadLine() ?? string.Empty;
+            var code = Console.ReadLine() ?? string.Empty;
             return code;
         }
         public static void ChooseMenu(List<Option> options)

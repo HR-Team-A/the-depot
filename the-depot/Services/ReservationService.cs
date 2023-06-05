@@ -155,7 +155,7 @@ namespace TheDepot.Services
         {
             Console.Clear();
             Console.WriteLine("Scan code:");
-            var code = OutputStatic.Output.ReadLine() ?? string.Empty;
+            var code = Console.ReadLine() ?? string.Empty;
             var dayKey = DayKeyRepository.GetByKey(code);
             if (dayKey == null)
             {
