@@ -14,6 +14,11 @@ namespace the_depot.Interfaces
             throw new NotImplementedException();
         }
 
+        public string ReadLine()
+        {
+            throw new NotImplementedException();
+        }
+
         public void WriteLine(string message)
         {
             Console.WriteLine(message);
@@ -26,7 +31,7 @@ namespace the_depot.Interfaces
 
 		void WriteLine(string message);
         string ReadKey();
-
+        string ReadLine();
         void Clear();
 
     }

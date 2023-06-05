@@ -10,19 +10,14 @@ namespace TheDepot.Tests
 	public class TourServiceTests
     {
         [Fact]
-        public void SomeTest()
+        public void ScanCodeAndCancelReservation()
 		{
 
             Mock<IConsole> mock = new Mock<IConsole>();
             mock.SetupSequence(x => x.ReadKey()).Returns("Test 1").Returns("Test 2");
 
             OutputStatic.Output = mock.Object;
-
-
             TourService.StartTourOrMakeReservation(999999);
-
-
-
             mock.Verify(m => m.WriteLine(It.IsIn<string>("", "")),Times.Exactly(2));
 
 

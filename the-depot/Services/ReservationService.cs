@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Text.Json;
+using the_depot;
 using TheDepot.Models;
 using TheDepot.Repositories;
 
@@ -154,7 +155,7 @@ namespace TheDepot.Services
         {
             Console.Clear();
             Console.WriteLine("Scan code:");
-            var code = Console.ReadLine() ?? string.Empty;
+            var code = OutputStatic.Output.ReadLine() ?? string.Empty;
             var dayKey = DayKeyRepository.GetByKey(code);
             if (dayKey == null)
             {

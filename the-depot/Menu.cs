@@ -20,7 +20,7 @@ namespace TheDepot
             Console.Clear();
             OutputStatic.Output.WriteLine(message);
             OutputStatic.Output.WriteLine(returnMessage);
-            Console.ReadKey();
+            OutputStatic.Output.ReadKey();
         }
 
         // Default action of all the options. You can create more methods
@@ -36,7 +36,7 @@ namespace TheDepot
         {
             Console.Clear();
             Console.WriteLine(message);
-            var code = Console.ReadLine() ?? string.Empty;
+            var code = OutputStatic.Output.ReadLine() ?? string.Empty;
             return code;
         }
         public static void ChooseMenu(List<Option> options)
