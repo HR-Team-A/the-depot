@@ -3,8 +3,8 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Text.Json;
-using the_depot.Constants;
-using the_depot.Models;
+using TheDepot.Constants;
+using TheDepot.Models;
 
 namespace ConsoleApp
 {

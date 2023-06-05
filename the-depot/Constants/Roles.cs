@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace the_depot.Constants
+namespace TheDepot.Constants
 {
     public enum Roles
     {

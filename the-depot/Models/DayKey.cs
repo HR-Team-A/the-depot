@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Text.Json.Serialization;
-using the_depot.Constants;
+using TheDepot.Constants;
 
-namespace the_depot.Models
+namespace TheDepot.Models
 {
     public class DayKey
     {

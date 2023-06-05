@@ -1,6 +1,6 @@
-﻿using the_depot.Models;
+﻿using TheDepot.Models;
 
-namespace the_depot.Services
+namespace TheDepot.Services
 {
     public static class CodeValidationService
     {

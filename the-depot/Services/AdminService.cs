@@ -1,17 +1,17 @@
-namespace the_depot.Services
+using TheDepot.Repositories;
+
+namespace TheDepot.Services
 {
     public static class AdminService
     {
         public static List<string> GetRecommendations()
         {
             List<string> recommendations = new List<string>();
-            
-            var reservations = ReservationService.LoadReservations();
-            
+            var reservations = ReservationRepository.All();
             var currentTime = DateTime.Now.TimeOfDay;
-            var tours = TourService.LoadTours().Where(x => x.Started);
+            var startedTours = TourRepository.FindByStarted(true);
 
-            foreach (var tour in tours)
+            foreach (var tour in startedTours)
             {
                 int reservationCount = reservations.Count(x => x.Tour_Id == tour.Id);
                 int percent = (int)Math.Round((double)(100 / tour.MaxAttendees) * reservationCount);
@@ -27,6 +27,20 @@ namespace the_depot.Services
             }
 
             return recommendations;
+        }
+
+        public static void MakeAdminList()
+        {
+            Console.Clear();
+            List<string> recommendations = AdminService.GetRecommendations();
+            if (!recommendations.Any())
+            {
+                Menu.WriteTemporaryMessageAndReturnToMenu("Op dit moment zijn er geen aanpassingen nodig.");
+            }
+
+            // Make string of list, split by new line.
+            string recommendationStr = string.Join("\n", recommendations);
+            Menu.WriteTemporaryMessageAndReturnToMenu(recommendationStr);
         }
     }
 }

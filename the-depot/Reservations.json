@@ -53,5 +53,10 @@
     "Key_Id": 14,
     "Tour_Id": 1,
     "Attended": true
+  },
+  {
+    "Key_Id": 1,
+    "Tour_Id": 20,
+    "Attended": true
   }
 ]

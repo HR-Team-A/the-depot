@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Text.Json;
-using the_depot.Models;
+using TheDepot.Models;
+using TheDepot.Repositories;
 
-namespace the_depot.Services
+namespace TheDepot.Services
 {
     public class ReservationService
     {
@@ -11,85 +13,165 @@ namespace the_depot.Services
         /// <summary>
         /// load all daykeys
         /// </summary>
-        public static List<Reservation> LoadReservations()
+        public static List<Reservation> Load()
         {
             var json = File.ReadAllText(Path);
             List<Reservation> reservations = JsonSerializer.Deserialize<List<Reservation>>(json) ?? new List<Reservation>();
             return reservations;
         }
 
-        public static string SetReservationAttended(int dayKey_Id, int tour_Id)
+        public static bool SetReservationAttended(int dayKey_Id, int tour_Id, out string error)
         {
-            var reservations = LoadReservations();
-            var reservation = reservations.FirstOrDefault(x => x.Key_Id == dayKey_Id && x.Tour_Id == tour_Id);
+            error = "";
+            var tour = TourRepository.Get(tour_Id);
+            var reservations = ReservationRepository.FindByTour(tour_Id);
+            if (tour == null)
+            {
+                error = "Deze rondleiding is verlopen";
+                return false;
+            }
+            var reservation = reservations.FirstOrDefault(x=>x.Key_Id == dayKey_Id);
             if (reservation == null)
             {
-                var tour = TourService.GetTour(tour_Id);
-                var attendeesCount = TourService.GetAttendeesCount(tour_Id);
-                if (tour!.MaxAttendees <= attendeesCount)
-                {
-                    return "De rondleiding zit vol.";
-                }
-                var message = AddReservation(dayKey_Id, tour_Id);
-                if (message == "Reservering mislukt, u heeft vandaag al deelgenomen aan een rondleiding.")
-                    return message;
-                reservations = LoadReservations();
-                reservation = reservations.FirstOrDefault(x => x.Key_Id == dayKey_Id && x.Tour_Id == tour_Id);
+                error = "U heeft geen reservering voor deze rondleiding";
+                return true;
             }
-            reservation!.Attended = true;
-            SaveData(reservations);
-            return "";
+            reservation.Attended = true;
+            SaveData();
+            return true;
         }
 
-        public static string AddReservation(int dayKey_Id, int tour_Id)
+        public static void ScanCodeToAttend(Tour tour, string message)
         {
-            var reservations = LoadReservations();
-            if (reservations.Any(x => x.Key_Id == dayKey_Id && x.Attended))
-                return "Reservering mislukt, u heeft vandaag al deelgenomen aan een rondleiding.";
-            if (reservations.Any(x => x.Key_Id == dayKey_Id))
+            var code = Menu.WriteMessageAndScanCode(message);
+            var dayKey = DayKeyRepository.GetByKey(code);
+            if (code == "stop")
             {
-                var reservation = reservations.First(x => x.Key_Id == dayKey_Id);
-                reservations = CancelReservation(dayKey_Id, out string error);
-                var tour = TourService.GetTour(reservation.Tour_Id);
-                if (tour_Id == tour!.Id)
-                {
-                    reservations.Add(new Reservation { Attended = false, Key_Id = dayKey_Id, Tour_Id = tour_Id });
-                    SaveData(reservations);
-                    return string.Empty;
-                }
-                string tourTime = tour!.Time.ToString("H:mm");
-                reservations.Add(new Reservation { Attended = false, Key_Id = dayKey_Id, Tour_Id = tour_Id });
-                SaveData(reservations);
-                return "De reservering van " + tourTime + " is succesvol vervangen.";
+                Menu.ChooseMenu(TourService.MakeToursMenuList());
             }
-            reservations.Add(new Reservation { Attended = false, Key_Id = dayKey_Id, Tour_Id = tour_Id });
-            SaveData(reservations);
-            return string.Empty;
+            if (dayKey == null)
+            {
+                ScanCodeToAttend(tour, $"{TourService.GetTourStartingInformation(tour.Id)}  \nDeze sleutel is niet gevonden, probeer het opnieuw");
+            }
+            if(dayKey!.Role != Constants.Roles.Visitor)
+            {
+                ScanCodeToAttend(tour, $"{TourService.GetTourStartingInformation(tour.Id)}  \nDeze sleutel heeft verkeerde rechten");
+            }
+            var succeeded = ReservationService.SetReservationAttended(dayKey!.Id, tour.Id, out string error);
+            if (!succeeded)
+            {
+                ScanCodeToAttend(tour, $"{TourService.GetTourStartingInformation(tour.Id)}  \n" + error);
+            }
+            // We check the OS, only windows supports the useage of Console.Beep();
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                Console.Beep();
+            }
+            else
+            {
+                Console.WriteLine("Biep boop");
+            }
+            ScanCodeToAttend(tour, $"{TourService.GetTourStartingInformation(tour.Id)}  \nU bent successvol aangemeld, laat de volgende bezoeker hun code scannen");
+
         }
 
-        public static List<Reservation> CancelReservation(int dayKey_Id, out string error)
+        public static Reservation? AddNotReservedAttended(int dayKey_Id, int tour_Id, out string response)
         {
-            error = string.Empty;
-            var reservations = LoadReservations();
+            var tour = TourRepository.Get(tour_Id);
+            var attendeesCount = ReservationRepository.FindByTour(tour_Id).Count();
+            if (tour == null)
+            {
+                response = "Deze rondleiding is verlopen";
+                return null;
+            }
+            if (tour.MaxAttendees <= attendeesCount)
+            {
+                response = "U heeft geen reservering voor deze rondleiding, en de rondleiding is vol";
+                return null;
+            }
+            var reservation = AddReservation(dayKey_Id, tour_Id, out string error);
+            response = error;
+            if (reservation == null)
+            {
+                return reservation;
+            }
+            reservation.Attended = true;
+            SaveData();
+            return reservation;
+        }
+
+        public static Reservation? AddReservation(int dayKey_Id, int tour_Id, out string addResponse)
+        {
+            addResponse = "";
+            var cancelled = CancelReservation(dayKey_Id, out string cancelResponse);
+            addResponse = cancelResponse;
+            if (!cancelled)
+            {
+                return null;
+            }
+            var reservations = ReservationRepository.All();
+            var reservation = new Reservation { Attended = false, Key_Id = dayKey_Id, Tour_Id = tour_Id };
+            reservations.Add(reservation);
+            SaveData();
+            return reservation;
+        }
+
+        public static bool CancelReservation(int dayKey_Id, out string cancelResponse)
+        {
+            cancelResponse = string.Empty;
+            var reservations = ReservationRepository.All();
             var reservation = reservations.FirstOrDefault(x => x.Key_Id == dayKey_Id);
-            if (reservation != null)
+            var tour = TourRepository.Get(reservation.Tour_Id);
+            if(reservation == null)
             {
-                if (!reservation.Attended)
-                    reservations.Remove(reservation);
-                else
-                    error = "U heeft al deelgenomen aan een rondleiding, u kunt deze niet annuleren.";
+                return true;
             }
-            SaveData(reservations);
-            return reservations;
+            if (reservation.Attended)
+            {
+                cancelResponse = "U heeft al deelgenomen aan een rondleiding, u kunt deze niet annuleren.";
+                return false;
+            }
+            string tourTime = tour!.Time.ToString("H:mm");
+            cancelResponse = "De reservering van " + tourTime + " is succesvol vervangen.";
+            reservations.Remove(reservation);
+            SaveData();
+            return true;
+        }
+
+        //cancel the reservation 
+        public static void ScanCodeAndCancelReservation(string message)
+        {
+            Console.Clear();
+            Console.WriteLine("Scan code:");
+            var code = Console.ReadLine() ?? string.Empty;
+            var dayKey = DayKeyRepository.GetByKey(code);
+            if (dayKey == null)
+            {
+                Menu.WriteTemporaryMessageAndReturnToMenu("Deze code is niet gevonden.");
+            }
+            if (dayKey.Role == Constants.Roles.Visitor)
+            {
+                Menu.WriteTemporaryMessageAndReturnToMenu("Deze code is niet geldig.");
+            }
+            var id = dayKey.Id;
+
+            ReservationService.CancelReservation((int)id, out string error);
+            if (!string.IsNullOrEmpty(error))
+            {
+                Menu.WriteTemporaryMessageAndReturnToMenu(error);
+            }
+            Menu.WriteTemporaryMessageAndReturnToMenu(message);
         }
 
         /// <summary>
         /// data data to file
         /// </summary>
-        private static void SaveData(List<Reservation> reservations)
+        private static void SaveData()
         {
+            var reservations = ReservationRepository.All();
             string json = JsonSerializer.Serialize(reservations, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(Path, json);
+            ReservationRepository.Update();
         }
     }
 }
