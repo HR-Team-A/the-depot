@@ -106,7 +106,6 @@ namespace TheDepot.Services
             {
                 optionsReservation.Add(MakeTourListItem(tour));
             }
-
             optionsReservation.Add(new Option("Rondleiding annuleren", () => ReservationService.ScanCodeAndCancelReservation("Rondleiding is geannuleerd."), DateTime.MinValue));
             optionsReservation.Add(new Option("Afdelingshoofd menu", () => AdminService.MakeAdminList(), DateTime.MinValue));
             return optionsReservation;
