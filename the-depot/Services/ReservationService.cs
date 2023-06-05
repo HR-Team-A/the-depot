@@ -125,7 +125,6 @@ namespace TheDepot.Services
             cancelResponse = string.Empty;
             var reservations = ReservationRepository.All();
             var reservation = reservations.FirstOrDefault(x => x.Key_Id == dayKey_Id);
-            var tour = TourRepository.Get(reservation.Tour_Id);
             if(reservation == null)
             {
                 return true;
@@ -135,6 +134,7 @@ namespace TheDepot.Services
                 cancelResponse = "U heeft al deelgenomen aan een rondleiding, u kunt deze niet annuleren.";
                 return false;
             }
+            var tour = TourRepository.Get(reservation.Tour_Id);
             if (tour != null)
             {
                 string tourTime = tour!.Time.ToString("H:mm");

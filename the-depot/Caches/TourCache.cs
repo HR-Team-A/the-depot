@@ -6,7 +6,7 @@ namespace TheDepot.Caches
 {
 	public class TourCache
 	{
-        private static TourCache instance = null;
+        private static TourCache? instance = null;
         public static TourCache Instance
         {
             get

@@ -6,7 +6,7 @@ namespace TheDepot.Caches
 {
 	public class ReservationCache
 	{
-        private static ReservationCache instance = null;
+        private static ReservationCache? instance = null;
         public static ReservationCache Instance
         {
             get

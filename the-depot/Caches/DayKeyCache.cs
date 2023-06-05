@@ -6,7 +6,7 @@ namespace TheDepot.Caches
 {
 	public class DayKeyCache
 	{
-        private static DayKeyCache instance = null;
+        private static DayKeyCache? instance = null;
         public static DayKeyCache Instance
         {
             get
