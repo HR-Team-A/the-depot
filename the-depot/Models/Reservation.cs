@@ -1,5 +1,5 @@
 ﻿using System;
-namespace the_depot.Models
+namespace TheDepot.Models
 {
 	public class Reservation
 	{
