@@ -27,7 +27,7 @@ namespace TheDepot.Services
             {
                 Menu.WriteTemporaryMessageAndReturnToMenu("Deze rondleiding is helaas verlopen, selecteer een andere rondleiding");
             }
-            var code = Menu.WriteMessageAndScanCode($"{tour!.Time.ToString("H:mm")} is geselecteerd. Scan uw code om verder te gaan");
+            var code = Menu.WriteMessageAndScanCode($"{tour!.Time.ToString("H:mm")} is geselecteerd. Scan uw code om verder te gaan:");
             var key = DayKeyRepository.GetByKey(code);
             if (key == null || key.Role == Roles.None)
             {

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Text.Json;
-using the_depot;
 using TheDepot.Models;
 using TheDepot.Repositories;
 
@@ -115,9 +114,11 @@ namespace TheDepot.Services
                 return null;
             }
             var reservations = ReservationRepository.All();
+            var tour = TourRepository.Get(tour_Id);
             var reservation = new Reservation { Attended = false, Key_Id = dayKey_Id, Tour_Id = tour_Id };
             reservations.Add(reservation);
             SaveData();
+            addResponse += $" U heeft succesvol een reservering geplaatst op: {tour!.Time.ToString("HH:mm")}.";
             return reservation;
         }
 
@@ -175,7 +176,7 @@ namespace TheDepot.Services
         }
 
         /// <summary>
-        /// data data to file
+        /// save data to file
         /// </summary>
         private static void SaveData()
         {
