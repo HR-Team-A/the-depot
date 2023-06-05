@@ -18,22 +18,5 @@ namespace TheDepot.Services
             List<DayKey> dayKeys = JsonSerializer.Deserialize<List<DayKey>>(json) ?? new List<DayKey>();
             return dayKeys;
         }
-
-        
-
-        ///// <summary>
-        ///// get a Daykey
-        ///// </summary>
-        ///// <param name="key"></param>
-        ///// <returns></returns>
-        //public static DayKey? GetDayKey(string key)
-        //{
-        //    return DayKeys.FirstOrDefault(x => x.Key == key);
-        //}
-
-        //public static List<DayKey> GetAllKeys()
-        //{
-        //    return DayKeys;
-        //}
     }
 }

@@ -30,18 +30,6 @@ namespace TheDepot
             ChooseMenu(options);
         }
 
-        //public static (DayKey?, string) GetDayKeyByCode(string code)
-        //{
-        //    (DayKey?, string) returnValue =  new (null, "");
-        //    returnValue.Item1 = DayKeyService.GetDayKey(code);
-        //    if (returnValue.Item1 == null)
-        //    {
-        //        returnValue.Item2 = "Deze code is niet gevonden.";
-        //    }
-        //    return returnValue;
-
-        //}
-
         // scan the code and show the role
         public static string WriteMessageAndScanCode(string message, bool tourStarted = false, int tour_Id = 0, bool admin = false)
         {
@@ -50,33 +38,6 @@ namespace TheDepot
             var code = Console.ReadLine() ?? string.Empty;
             return code;
         }
-
-        ////cancel the reservation 
-        //static void CancelReservation(string message)
-        //{
-        //    Console.Clear();
-        //    Console.WriteLine("Scan code:");
-        //    var code = Console.ReadLine() ?? string.Empty;
-        //    if (DayKeyService.GetDayKey(code)?.Role == Constants.Roles.Visitor)
-        //    {
-        //        var id = DayKeyService.GetDayKey(code)?.Id;
-        //        if (id != null)
-        //        {
-        //            ReservationService.CancelReservation((int)id, out string error);
-        //            if (!string.IsNullOrEmpty(error))
-        //            {
-        //                WriteTemporaryMessage(error);
-        //            }
-        //        }
-
-        //        WriteTemporaryMessage(message);
-        //    }
-        //    else
-        //        WriteTemporaryMessage("Deze code is niet geldig.");
-        //}
-
-        
-
         public static void ChooseMenu(List<Option> options)
         {
             // Set the reservation hour
