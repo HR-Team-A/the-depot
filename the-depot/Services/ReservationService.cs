@@ -106,11 +106,21 @@ namespace TheDepot.Services
 
         public static Reservation? AddReservation(int dayKey_Id, int tour_Id, out string addResponse)
         {
-            addResponse = "";
-            var cancelled = CancelReservation(dayKey_Id, out string cancelResponse);
-            addResponse = cancelResponse;
             var tour = TourRepository.Get(tour_Id);
             var attendeesCount = ReservationRepository.FindByTour(tour_Id).Count();
+            var reservations = ReservationRepository.All();
+            var old_reservation = reservations.FirstOrDefault(x => x.Key_Id == dayKey_Id);
+            addResponse = "";
+
+            if (old_reservation != null && tour_Id == old_reservation!.Tour_Id)
+            {
+                addResponse = "U heeft al een reservering voor deze rondleiding.";
+                return null;
+            }
+
+            var cancelled = CancelReservation(dayKey_Id, out string cancelResponse);
+            addResponse = cancelResponse;
+
             if (tour!.MaxAttendees <= attendeesCount)
             {
                 addResponse = "U heeft geen reservering voor deze rondleiding, en de rondleiding is vol";
@@ -120,11 +130,10 @@ namespace TheDepot.Services
             {
                 return null;
             }
-            var reservations = ReservationRepository.All();
             var reservation = new Reservation { Attended = false, Key_Id = dayKey_Id, Tour_Id = tour_Id };
             reservations.Add(reservation);
             SaveData();
-            addResponse += $" U heeft succesvol een reservering geplaatst op: {tour!.Time.ToString("HH:mm")}.";
+            addResponse += $"U heeft succesvol een reservering geplaatst op: {tour!.Time.ToString("HH:mm")}.";
             return reservation;
         }
 
@@ -151,9 +160,11 @@ namespace TheDepot.Services
                     cancelResponse = "U heeft geen reservering voor deze rondleiding, en de rondleiding is vol";
                     return false;
                 }
-
+                else
+                {
                 string tourTime = tour!.Time.ToString("H:mm");
-                cancelResponse = "De reservering van " + tourTime + " is succesvol vervangen.";
+                cancelResponse = "De reservering van " + tourTime + " is succesvol vervangen. ";
+                }
             }
             else
             {
