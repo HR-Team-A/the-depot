@@ -65,8 +65,6 @@ namespace TheDepot.Services
             Menu.WriteTemporaryMessageAndReturnToMenu(response);
         }
 
-        
-
         public static string GetTourStartingInformation(int tour_Id)
         {
             var tour = TourRepository.Get(tour_Id);

@@ -27,7 +27,7 @@ namespace TheDepot.Repositories
 
         public static List<Tour> FindByStartedAndTimeOfDay(bool started, TimeSpan timeOfDay)
         {
-            return TourCache.Instance.Tours.FindAll(x=>x.Started && x.Time.TimeOfDay >= timeOfDay);
+            return TourCache.Instance.Tours.FindAll(x=>x.Started == started && x.Time.TimeOfDay >= timeOfDay);
         }
     }
 }

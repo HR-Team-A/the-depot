@@ -33,8 +33,12 @@ namespace TheDepot.Services
             var reservation = reservations.FirstOrDefault(x=>x.Key_Id == dayKey_Id);
             if (reservation == null)
             {
-                error = "U heeft geen reservering voor deze rondleiding";
-                return true;
+                reservation = AddNotReservedAttended(dayKey_Id, tour_Id, out string response);
+                if(reservation == null)
+                {
+                    error = response;
+                    return true;
+                }
             }
             reservation.Attended = true;
             SaveData();
@@ -131,8 +135,15 @@ namespace TheDepot.Services
                 cancelResponse = "U heeft al deelgenomen aan een rondleiding, u kunt deze niet annuleren.";
                 return false;
             }
-            string tourTime = tour!.Time.ToString("H:mm");
-            cancelResponse = "De reservering van " + tourTime + " is succesvol vervangen.";
+            if (tour != null)
+            {
+                string tourTime = tour!.Time.ToString("H:mm");
+                cancelResponse = "De reservering van " + tourTime + " is succesvol vervangen.";
+            }
+            else
+            {
+                cancelResponse = "Uw vorige reservering is succesvol vervangen";
+            }
             reservations.Remove(reservation);
             SaveData();
             return true;
@@ -154,8 +165,7 @@ namespace TheDepot.Services
                 Menu.WriteTemporaryMessageAndReturnToMenu("Deze code is niet geldig.");
             }
             var id = dayKey.Id;
-
-            ReservationService.CancelReservation((int)id, out string error);
+            ReservationService.CancelReservation(id, out string error);
             if (!string.IsNullOrEmpty(error))
             {
                 Menu.WriteTemporaryMessageAndReturnToMenu(error);
