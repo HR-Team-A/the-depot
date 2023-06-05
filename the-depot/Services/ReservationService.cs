@@ -148,7 +148,7 @@ namespace TheDepot.Services
             {
                 if (tour.MaxAttendees <= attendeesCount)
                 {
-                    cancelResponse = "De zit al vol!";
+                    cancelResponse = "U heeft geen reservering voor deze rondleiding, en de rondleiding is vol";
                     return false;
                 }
 
