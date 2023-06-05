@@ -87,7 +87,17 @@ namespace TheDepot
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("Gebruik de pijltjestoetsen om door het menu bewegen.");
+            Console.WriteLine("________                        __   \n" +
+                "\\______ \\   ____ ______   _____/  |_ \n" +
+                " |    |  \\_/ __ \\\\____ \\ /  _ \\   __\\\n" +
+                " |    `   \\  ___/|  |_> >  <_> )  |  \n" +
+                "/_______  /\\___  >   __/ \\____/|__|  \n" +
+                "        \\/     \\/|__|                \n" +
+                " \n" +
+                "Welkom bij Depot Boijmans Van Beuningen \n" +
+                "Het eerste publiek toegankelijk kunstdepot ter wereld. \n" +
+                "Gebruik de pijltjestoetsen om door het menu te navigeren en een reservering te kunnen plaatsen. \n" +
+                " ");
             foreach (Option option in options)
             {
                 if (option == selectedOption)
