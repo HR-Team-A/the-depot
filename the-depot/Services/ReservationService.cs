@@ -49,7 +49,7 @@ namespace TheDepot.Services
         {
             var code = Menu.WriteMessageAndScanCode(message);
             var dayKey = DayKeyRepository.GetByKey(code);
-            if (code == "stop")
+            if (code == "start")
             {
                 Menu.ChooseMenu(TourService.MakeToursMenuList());
             }
