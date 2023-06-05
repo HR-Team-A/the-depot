@@ -111,7 +111,7 @@ namespace TheDepot.Services
             addResponse = cancelResponse;
             var tour = TourRepository.Get(tour_Id);
             var attendeesCount = ReservationRepository.FindByTour(tour_Id).Count();
-            if (tour.MaxAttendees <= attendeesCount)
+            if (tour!.MaxAttendees <= attendeesCount)
             {
                 addResponse = "U heeft geen reservering voor deze rondleiding, en de rondleiding is vol";
                 return null;
