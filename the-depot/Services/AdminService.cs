@@ -16,11 +16,11 @@ namespace TheDepot.Services
                 int reservationCount = reservations.Count(x => x.Tour_Id == tour.Id);
                 int percent = (int)Math.Round((double)(100 / tour.MaxAttendees) * reservationCount);
 
-                if(percent < 20)
+                if(percent <= 20)
                 {
                     recommendations.Add($"De rondleiding om {tour.Time.ToString("HH:mm")} had {reservationCount}/{tour.MaxAttendees} bezoekers. Wij adviseren minder rondleidingen rond dit tijdstip.");
                 }
-                else if( percent > 80)
+                else
                 {
                     recommendations.Add($"De rondleiding om {tour.Time.ToString("HH:mm")} had {reservationCount}/{tour.MaxAttendees} bezoekers. Wij adviseren meer rondleidingen rond dit tijdstip.");
                 }
