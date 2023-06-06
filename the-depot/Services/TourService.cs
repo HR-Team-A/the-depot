@@ -56,7 +56,7 @@ namespace TheDepot.Services
             }
             tour.Started = true;
             SaveData();
-            ReservationService.ScanCodeToAttend(tour, TourService.GetTourStartingInformation(tour.Id) + "\nScan uw code om deel te nemen aan deze rondleiding");
+            ReservationService.ScanCodeToAttend(tour, GetTourStartingInformation(tour.Id) + "\nScan uw code om deel te nemen aan deze rondleiding");
         }
 
         public static void MakeReservation(int dayKey_Id, int tour_Id)
