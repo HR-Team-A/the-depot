@@ -43,7 +43,14 @@ namespace TheDepot.Services
             }
             if(key.Role == Roles.Visitor)
             {
-                MakeReservation(key.Id, tour_Id);
+                var reservations = ReservationRepository.FindByTour(tour_Id);
+                var reservation = reservations.FirstOrDefault(x => x.Key_Id == key.Id);
+                if (reservation == null)
+                {
+                    MakeReservation(key.Id, tour_Id);
+                }
+                Menu.WriteTemporaryMessageAndReturnToMenu("U neemt al deel aan deze reservering.");
+
             }
         }
 
