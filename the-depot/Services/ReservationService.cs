@@ -99,8 +99,8 @@ namespace TheDepot.Services
             {
                 return reservation;
             }
-            reservation = ReservationRepository.GetByKeyAndTour(dayKey_Id, tour_Id);
-            reservation.Attended = true;
+            reservation = ReservationRepository.GetByKeyAndTour(reservation.Key_Id, reservation.Tour_Id);
+            reservation!.Attended = true;
             SaveData();
             return reservation;
         }
