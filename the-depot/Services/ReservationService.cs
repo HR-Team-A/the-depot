@@ -82,7 +82,12 @@ namespace TheDepot.Services
                 ScanCodeToAttend(tour, $"{TourService.GetTourStartingInformation(tour.Id)}  \nDeze code kan niet meer toegevoegd worden");
 
             }
-            reservation!.Attended = true;
+            if (reservation!.Attended)
+            {
+                ScanCodeToAttend(tour, $"{TourService.GetTourStartingInformation(tour.Id)}  \nDeze code is al gescanned.");
+
+            }
+            reservation.Attended = true;
             SaveData();
             ScanCodeToAttend(tour, $"{TourService.GetTourStartingInformation(tour.Id)}  \nU bent successvol aangemeld, laat de volgende bezoeker hun code scannen");
 
