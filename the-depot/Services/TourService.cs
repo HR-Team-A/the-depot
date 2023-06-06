@@ -43,7 +43,7 @@ namespace TheDepot.Services
             }
             if(key.Role == Roles.Visitor)
             {
-                reservation = ReservationRepository.GetByKeyAndTour(key.Id, tour_Id)
+                var reservation = ReservationRepository.GetByKeyAndTour(key.Id, tour_Id);
                 if (reservation == null)
                 {
                     MakeReservation(key.Id, tour_Id);
