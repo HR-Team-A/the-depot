@@ -75,6 +75,15 @@ namespace TheDepot.Services
             {
                 Console.WriteLine("Biep boop");
             }
+            var reservations = ReservationRepository.FindByTour(tour.Id);
+            var reservation = reservations.FirstOrDefault(x => x.Key_Id == dayKey.Id);
+            if (reservation == null)
+            {
+                ScanCodeToAttend(tour, $"{TourService.GetTourStartingInformation(tour.Id)}  \nDeze code kan niet meer toegevoegd worden");
+
+            }
+            reservation!.Attended = true;
+            SaveData();
             ScanCodeToAttend(tour, $"{TourService.GetTourStartingInformation(tour.Id)}  \nU bent successvol aangemeld, laat de volgende bezoeker hun code scannen");
 
         }
@@ -95,11 +104,7 @@ namespace TheDepot.Services
             }
             var reservation = AddReservation(dayKey_Id, tour_Id, out string error);
             response = error;
-            if (reservation == null)
-            {
-                return reservation;
-            }
-            reservation.Attended = true;
+            reservation!.Attended = true;
             SaveData();
             return reservation;
         }
