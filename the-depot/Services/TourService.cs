@@ -48,7 +48,7 @@ namespace TheDepot.Services
                 {
                     MakeReservation(key.Id, tour_Id);
                 }
-                Menu.WriteTemporaryMessageAndReturnToMenu("U neemt al deel aan deze reservering.");
+                Menu.WriteTemporaryMessageAndReturnToMenu("U neemt al deel aan deze rondleiding.");
 
             }
         }
