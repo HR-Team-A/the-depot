@@ -2,41 +2,41 @@
   {
     "Key_Id": 1,
     "Tour_Id": 1,
-    "Attended": true
+    "Attended": false
   },
   {
     "Key_Id": 2,
     "Tour_Id": 1,
-    "Attended": true
+    "Attended": false
   },
   {
     "Key_Id": 3,
     "Tour_Id": 1,
-    "Attended": true
+    "Attended": false
   },
   {
     "Key_Id": 4,
     "Tour_Id": 1,
-    "Attended": true
+    "Attended": false
   },
   {
     "Key_Id": 5,
     "Tour_Id": 1,
-    "Attended": true
+    "Attended": false
   },
   {
     "Key_Id": 6,
     "Tour_Id": 1,
-    "Attended": true
+    "Attended": false
   },
   {
     "Key_Id": 7,
     "Tour_Id": 1,
-    "Attended": true
+    "Attended": false
   },
   {
     "Key_Id": 8,
     "Tour_Id": 1,
-    "Attended": true
+    "Attended": false
   }
 ]
