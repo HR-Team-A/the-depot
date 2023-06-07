@@ -55,7 +55,7 @@ namespace TheDepot.Services
             var dayKey = DayKeyRepository.GetByKey(code);
             if (code == "start")
             {
-                Menu.ChooseMenu(TourService.MakeToursMenuList());
+                Menu.WriteTemporaryMessageAndReturnToMenu($"De tour van {tour.Time.ToString("HH:mm")} is nu gestart");
             }
             if (dayKey == null)
             {
