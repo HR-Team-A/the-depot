@@ -16,6 +16,10 @@ namespace TheDepot.Services
         public static List<Reservation> Load()
         {
             var json = File.ReadAllText(Path);
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                return new List<Reservation>();
+            }
             List<Reservation> reservations = JsonSerializer.Deserialize<List<Reservation>>(json) ?? new List<Reservation>();
             return reservations;
         }
@@ -37,7 +41,7 @@ namespace TheDepot.Services
                 if(reservation == null)
                 {
                     error = response;
-                    return true;
+                    return false;
                 }
             }
             reservation.Attended = true;
@@ -51,7 +55,7 @@ namespace TheDepot.Services
             var dayKey = DayKeyRepository.GetByKey(code);
             if (code == "start")
             {
-                Menu.ChooseMenu(TourService.MakeToursMenuList());
+                Menu.WriteTemporaryMessageAndReturnToMenu($"De tour van {tour.Time.ToString("HH:mm")} is nu gestart");
             }
             if (dayKey == null)
             {
@@ -117,13 +121,13 @@ namespace TheDepot.Services
                 addResponse = "U heeft al een reservering voor deze rondleiding.";
                 return null;
             }
-            var cancelled = CancelReservation(dayKey_Id, out string cancelResponse);
-            addResponse = cancelResponse;
             if (tour!.MaxAttendees <= attendeesCount)
             {
-                addResponse = "U heeft geen reservering voor deze rondleiding, en de rondleiding is vol";
+                addResponse = "Tour is al vol, kies alstublieft een andere tour.";
                 return null;
             }
+            var cancelled = CancelReservation(dayKey_Id, out string cancelResponse);
+            addResponse = cancelResponse;
             if (!cancelled)
             {
                 return null;
@@ -150,14 +154,8 @@ namespace TheDepot.Services
                 return false;
             }
             var tour = TourRepository.Get(reservation.Tour_Id);
-            var attendeesCount = ReservationRepository.FindByTour(reservation.Tour_Id).Count();
             if (tour != null)
             {
-                if (tour.MaxAttendees <= attendeesCount)
-                {
-                    cancelResponse = "U heeft geen reservering voor deze rondleiding, en de rondleiding is vol";
-                    return false;
-                }
                 string tourTime = tour!.Time.ToString("H:mm");
                 cancelResponse = "De reservering van " + tourTime + " is succesvol vervangen. ";
             }

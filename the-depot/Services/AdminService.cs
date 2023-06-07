@@ -26,7 +26,6 @@ namespace TheDepot.Services
                     recommendations.Add($"De rondleiding om {tour.Time.ToString("HH:mm")} had {reservationCount}/{tour.MaxAttendees} bezoekers. Wij adviseren meer rondleidingen rond dit tijdstip.");
                 }
             }
-
             return recommendations;
         }
 
